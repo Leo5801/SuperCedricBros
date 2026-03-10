@@ -27,6 +27,7 @@ import javax.swing.border.TitledBorder;
 
 public class FenetrePrincipale extends JFrame{
 	
+	private Jpanel test;
 	private JLabel imagePiece;
 	private JPanel zoneBoutonsChoix;
 	private JProgressBar barreVie;       
