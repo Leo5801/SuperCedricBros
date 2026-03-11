@@ -34,12 +34,12 @@ public class Lieu {
 	public Lieu() {}
 	
 	
-	public void ajouterActionDevant(ActionChangementMap action) {
+	public void ajouterActionDevant(Action action) {
 		this.actionsDevant.add(action);
 	}
 	
 	
-	public void ajouterActionDerriere(ActionChangementMap action) {
+	public void ajouterActionDerriere(Action action) {
 		this.actionsDerriere.add(action);
 	}
 

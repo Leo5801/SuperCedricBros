@@ -33,6 +33,7 @@ public class GestionnaireJeu {
         this.estDerriere = false; 
         this.lieuActuel = catalogue.get(nomLieu);
         rafraichirAffichage();
+        fenetre.viderZoneTexte();
     }
 
     // Cette méthode centrale s'occupe de TOUT l'affichage selon l'état
@@ -86,15 +87,20 @@ public class GestionnaireJeu {
         
         
         btn.addActionListener(e -> {
-            if (a instanceof ActionChangementMap) {
+            if(a instanceof ActionChangementMap) {
                 // On "cast" l'action pour accéder aux méthodes spécifiques du changement de map
                 ActionChangementMap acm = (ActionChangementMap) a;
-                afficherLieu(acm.getDestination());
+                this.afficherLieu(acm.getDestination());
                 
-            } else if (a instanceof ActionDialogue) {
-                // On "cast" pour accéder au texte du dialogue
-                ActionDialogue ad = (ActionDialogue) a;
-                fenetre.afficherTexte(ad.getTexte());
+            } else if(a instanceof ActionDialoguePnj) {
+                // On "cast" pour accéder au texte du dialoguePnj
+                ActionDialoguePnj ad = (ActionDialoguePnj) a;
+                this.afficherDialoguePnj(ad.getLeNomDuPerso(), ad.getTexte());
+                
+            } else if(a instanceof ActionDialogue) {
+            	// On "cast" pour accéder au texte du dialoguePnj
+            	ActionDialogue ad = (ActionDialogue) a;
+            	fenetre.afficherTexte(ad.getTexte());
             }
         });
         
@@ -105,7 +111,7 @@ public class GestionnaireJeu {
     
     private void afficherDialoguePnj(String leNomPnj, String leTexte) {
     	
-    	if(leNomPnj == "Eroll") {
+    	if(leNomPnj == "eroll") {
     		if(aCasquette) {
     			leNomPnj += "AvecCasquette";
     		} else {
@@ -113,7 +119,7 @@ public class GestionnaireJeu {
     		}
     	}
     	
-    	
+ 
     	fenetre.dialoguePnj(leNomPnj, leTexte);
     }
     

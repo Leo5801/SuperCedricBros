@@ -48,7 +48,8 @@ public class FenetrePrincipale extends JFrame{
         
         this.cacheImages = new HashMap<>();//on crée le tableau associatif
         this.prepareCache("map",900,500); //on remplit ce dernier des images au bon format, pas besoin d'aller les rechercher à chaque changement
-        this.prepareCache("portrait", 220, 300);
+        this.prepareCache("miniMap", 220, 300);
+        this.prepareCache("portrait", 220, 400);
         
         //on charge la fenêtre
         this.initialiserComposants();
@@ -162,7 +163,8 @@ public class FenetrePrincipale extends JFrame{
         // 4. OUEST : le PNJ qui parle
         this.portraitPNJ = new JLabel();
         this.portraitPNJ.setPreferredSize(new Dimension(220, 0));
-        this.portraitPNJ.setVerticalAlignment(JLabel.TOP);
+        this.portraitPNJ.setVerticalAlignment(JLabel.CENTER); 
+        this.portraitPNJ.setHorizontalAlignment(JLabel.CENTER);
         this.portraitPNJ.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.CENTER, TitledBorder.TOP));
         this.portraitPNJ.setBackground(new Color(245, 240, 230));
         this.portraitPNJ.setOpaque(true);
@@ -208,6 +210,7 @@ public class FenetrePrincipale extends JFrame{
 	
 	
 	public void setSalle(String nomSalle) {
+		
 	    if (this.cacheImages.containsKey(nomSalle)) {
 	        ImageIcon laSalle = this.cacheImages.get(nomSalle);
 	        this.imagePiece.setIcon(laSalle);
@@ -227,22 +230,29 @@ public class FenetrePrincipale extends JFrame{
 	
 	
 	public void viderActions() {
+		
         this.zoneBoutonsChoix.removeAll();
         this.zoneBoutonsChoix.revalidate();
         this.zoneBoutonsChoix.repaint();
     }
+	
 
     public void ajouterBoutonAction(JButton btn) {
+    	
         this.zoneBoutonsChoix.add(btn);
         this.zoneBoutonsChoix.revalidate();
     }
+    
 
     public void setVie(int valeur) {
+    	
         this.barreVie.setValue(valeur);
         if (valeur < 30) this.barreVie.setForeground(Color.RED);
     }
+    
 
     public void setPortrait(String nomImage) {
+    	
         if(this.cacheImages.containsKey(nomImage)) {
             this.portraitPNJ.setIcon(this.cacheImages.get(nomImage));
             if (nomImage.startsWith("miniMap")) {
@@ -250,6 +260,7 @@ public class FenetrePrincipale extends JFrame{
             } else {
                 this.portraitPNJ.setBorder(BorderFactory.createTitledBorder("Interlocuteur"));
             }
+            
         } else {
             
             this.portraitPNJ.setIcon(null);
@@ -282,7 +293,7 @@ public class FenetrePrincipale extends JFrame{
     
     public void viderZoneTexte() {
     	
-    	this.zoneTexte.removeAll();
+    	this.zoneTexte.setText("");
     	this.zoneTexte.revalidate();
     	this.zoneTexte.repaint();
     }
