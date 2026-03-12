@@ -43,6 +43,18 @@ public class Lieu {
 		this.actionsDerriere.add(action);
 	}
 
+	
+	public void ajouterActionsDevant(List<Action> actions) {
+		
+		this.actionsDevant.addAll(actions);
+	}
+	
+	
+	public void ajouterActionsDerriere(List<Action> actions) {
+		
+		
+		this.actionsDerriere.addAll(actions);
+	}
 
 	public String getNom() {
 		return this.nom;

@@ -34,6 +34,7 @@ public class GestionnaireJeu {
         this.lieuActuel = catalogue.get(nomLieu);
         rafraichirAffichage();
         fenetre.viderZoneTexte();
+        fenetre.afficherDescription(lieuActuel.getDescription());
     }
 
     // Cette méthode centrale s'occupe de TOUT l'affichage selon l'état
@@ -44,12 +45,14 @@ public class GestionnaireJeu {
 
         if (estDerriere) {
             fenetre.setSalle(lieuActuel.getNomDerriere());
+            
             // On charge les boutons spécifiques à l'arrière
             for (Action a : lieuActuel.getActionsDerriere()) {
             	genererBouton(a);
             }
         } else {
             fenetre.setSalle(lieuActuel.getNomDevant());
+            
             // On charge les boutons spécifiques au devant
             for (Action a : lieuActuel.getActionsDevant()) {
             	genererBouton(a);
@@ -121,6 +124,7 @@ public class GestionnaireJeu {
     	
  
     	fenetre.dialoguePnj(leNomPnj, leTexte);
+    	fenetre.lancerTimerRetourMinimap(this.lieuActuel.getMiniMap());
     }
     
     
@@ -129,9 +133,11 @@ public class GestionnaireJeu {
     	try {
 		    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Exception e) {}
-        
+    	
+
         FenetrePrincipale fenetre = new FenetrePrincipale();
         Map<String, Lieu> catalogue = GenerateurJeu.creerLeMonde();
+        
         
         // On crée le contrôleur
         GestionnaireJeu controleur = new GestionnaireJeu(fenetre, catalogue);

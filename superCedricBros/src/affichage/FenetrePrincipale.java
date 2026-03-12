@@ -23,6 +23,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 
 public class FenetrePrincipale extends JFrame{
@@ -49,7 +50,7 @@ public class FenetrePrincipale extends JFrame{
         this.cacheImages = new HashMap<>();//on crée le tableau associatif
         this.prepareCache("map",900,500); //on remplit ce dernier des images au bon format, pas besoin d'aller les rechercher à chaque changement
         this.prepareCache("miniMap", 220, 300);
-        this.prepareCache("portrait", 220, 400);
+        this.prepareCache("portrait", 220, 360);
         
         //on charge la fenêtre
         this.initialiserComposants();
@@ -79,7 +80,7 @@ public class FenetrePrincipale extends JFrame{
         this.zoneTexte.setEditable(false);
         this.zoneTexte.setLineWrap(true);
         this.zoneTexte.setWrapStyleWord(true);
-        this.zoneTexte.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        this.zoneTexte.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
         this.zoneTexte.setMargin(new Insets(10, 15, 10, 15));
         
         JScrollPane scrollTexte = new JScrollPane(this.zoneTexte);
@@ -264,7 +265,7 @@ public class FenetrePrincipale extends JFrame{
         } else {
             
             this.portraitPNJ.setIcon(null);
-            this.portraitPNJ.setBorder(BorderFactory.createTitledBorder("Seul..."));
+            this.portraitPNJ.setBorder(BorderFactory.createTitledBorder("Probleme"));
         }
         
         this.portraitPNJ.revalidate();
@@ -297,5 +298,28 @@ public class FenetrePrincipale extends JFrame{
     	this.zoneTexte.revalidate();
     	this.zoneTexte.repaint();
     }
-	
+    
+    
+    public void lancerTimerRetourMinimap(String nomMiniMap) {
+      
+        Timer timer = new Timer(5000, e -> {
+            
+            this.portraitPNJ.setBorder(BorderFactory.createTitledBorder(
+                null, "Localisation", TitledBorder.CENTER, TitledBorder.TOP));
+            
+            this.setPortrait(nomMiniMap);
+        });
+        
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
+    
+    public void afficherDescription(String leTexte) {
+    	
+    	this.zoneTexte.append("*" + leTexte + "*\n\n"); 
+    	this.zoneTexte.setCaretPosition(this.zoneTexte.getDocument().getLength());
+    	this.zoneTexte.revalidate();
+    	this.zoneTexte.repaint();
+    }
 }
