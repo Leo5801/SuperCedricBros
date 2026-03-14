@@ -161,7 +161,7 @@ public class FenetrePrincipale extends JFrame{
         add(panneauEst, BorderLayout.EAST);
 
         
-        // 4. OUEST : le PNJ qui parle
+        // 4. ouest : le portrait du pnj
         this.portraitPNJ = new JLabel();
         this.portraitPNJ.setPreferredSize(new Dimension(220, 0));
         this.portraitPNJ.setVerticalAlignment(JLabel.CENTER); 
@@ -254,6 +254,7 @@ public class FenetrePrincipale extends JFrame{
 
     public void setPortrait(String nomImage) {
     	
+    	//on récupère l'image dans le cache
         if(this.cacheImages.containsKey(nomImage)) {
             this.portraitPNJ.setIcon(this.cacheImages.get(nomImage));
             if (nomImage.startsWith("miniMap")) {
@@ -262,12 +263,14 @@ public class FenetrePrincipale extends JFrame{
                 this.portraitPNJ.setBorder(BorderFactory.createTitledBorder("Interlocuteur"));
             }
             
+            //si on trouve pas, pas de panique !
         } else {
             
             this.portraitPNJ.setIcon(null);
             this.portraitPNJ.setBorder(BorderFactory.createTitledBorder("Probleme"));
         }
         
+        //on rafraichit le tout
         this.portraitPNJ.revalidate();
         this.portraitPNJ.repaint();
     }
@@ -302,14 +305,17 @@ public class FenetrePrincipale extends JFrame{
     
     public void lancerTimerRetourMinimap(String nomMiniMap) {
       
+    	//Quand le joueur parle à un PNJ son portrait s'affiche pour 5 secondes
         Timer timer = new Timer(5000, e -> {
             
             this.portraitPNJ.setBorder(BorderFactory.createTitledBorder(
                 null, "Localisation", TitledBorder.CENTER, TitledBorder.TOP));
             
             this.setPortrait(nomMiniMap);
+            //après 5 secondes on récupère la minimap et on l'affiche
         });
         
+        //par sécurité
         timer.setRepeats(false);
         timer.start();
     }

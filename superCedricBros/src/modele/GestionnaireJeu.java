@@ -39,7 +39,7 @@ public class GestionnaireJeu {
         fenetre.afficherDescription(lieuActuel.getDescription());
     }
 
-    // Cette méthode centrale s'occupe de TOUT l'affichage selon l'état
+    // Cette méthode est la big boss de l'affichage
     private void rafraichirAffichage() {
     	
         fenetre.viderActions();
@@ -55,7 +55,7 @@ public class GestionnaireJeu {
         } else {
             fenetre.setSalle(lieuActuel.getNomDevant());
             
-            // On charge les boutons spécifiques au devant
+            // On charge les boutons spécifiques devant
             for (Action a : lieuActuel.getActionsDevant()) {
             	genererBouton(a);
             }
@@ -75,7 +75,7 @@ public class GestionnaireJeu {
     	
         JButton btn = new JButton("Se retourner");
         
-        
+        //on ajoute le bouton se retourner à chaque map sauf couloir, qui permet d'inverser l'état
         btn.addActionListener(e -> {
             this.estDerriere = !this.estDerriere; // On inverse l'état
             rafraichirAffichage(); // On relance la mise à jour
