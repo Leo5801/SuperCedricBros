@@ -322,4 +322,10 @@ public class FenetrePrincipale extends JFrame{
     	this.zoneTexte.revalidate();
     	this.zoneTexte.repaint();
     }
+    
+    
+    public Component[] getBoutons() {
+    	
+    	return this.zoneBoutonsChoix.getComponents();
+    }
 }

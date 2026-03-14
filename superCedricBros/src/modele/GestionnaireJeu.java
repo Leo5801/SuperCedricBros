@@ -1,7 +1,9 @@
 package modele;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.UIManager;
@@ -95,6 +97,12 @@ public class GestionnaireJeu {
                 ActionChangementMap acm = (ActionChangementMap) a;
                 this.afficherLieu(acm.getDestination());
                 
+            } else if(a instanceof ActionChangementVue) {
+            	
+            	ActionChangementVue ad = (ActionChangementVue) a;
+            	this.changerVue(ad.getDestination());
+            	fenetre.afficherTexte(ad.getTexte());
+            	
             } else if(a instanceof ActionDialoguePnj) {
                 // On "cast" pour accéder au texte du dialoguePnj
                 ActionDialoguePnj ad = (ActionDialoguePnj) a;
@@ -104,6 +112,7 @@ public class GestionnaireJeu {
             	// On "cast" pour accéder au texte du dialoguePnj
             	ActionDialogue ad = (ActionDialogue) a;
             	fenetre.afficherTexte(ad.getTexte());
+            	
             }
         });
         
@@ -125,6 +134,43 @@ public class GestionnaireJeu {
  
     	fenetre.dialoguePnj(leNomPnj, leTexte);
     	fenetre.lancerTimerRetourMinimap(this.lieuActuel.getMiniMap());
+    }
+    
+    
+    public void changerVue(String laNouvelleVue) {
+    	
+    	fenetre.setSalle(laNouvelleVue);
+    	Component[] mesComposants = fenetre.getBoutons();
+    	
+    	JButton btn = new JButton("s'éloigner");
+    	
+    	
+    	fenetre.viderActions();
+    	
+        
+        btn.addActionListener(e -> {
+            if(estDerriere) {
+            	fenetre.setSalle(lieuActuel.getNomDerriere());
+            	fenetre.viderActions();
+            	for(Component c : mesComposants) {
+            		if(c instanceof JButton) {
+            			JButton bouton = (JButton) c;
+            			fenetre.ajouterBoutonAction(bouton);
+            		}
+            	}
+            } else {
+            	fenetre.setSalle(lieuActuel.getNomDevant());
+            	fenetre.viderActions();
+            	for(Component c : mesComposants) {
+            		if(c instanceof JButton) {
+            			JButton bouton = (JButton) c;
+            			fenetre.ajouterBoutonAction(bouton);
+            		}
+            	}
+            }
+        });
+        
+        fenetre.ajouterBoutonAction(btn);
     }
     
     
