@@ -2,23 +2,38 @@ package modele;
 
 public class Pnj {
 
-	String nom;
-	String nomPortrait;
-	String localisation;
-	String[] dialogue;
+	private String nom;
+	private String nomPortrait;
+	private String[] dialogue;
 	
 	
-	public Pnj(String nom, String nomPortrait, String localisation, String[] dialogue) {
+	public Pnj(String nom, String nomPortrait, String[] dialogue) {
 		
 		this.nom = nom;
 		this.nomPortrait = nomPortrait;
-		this.localisation = localisation;
 		this.dialogue = dialogue;
 	}
 	
 	
-	public Pnj(String nom, String nomPortrait, String localisation) {
-		
-		this(nom, nomPortrait, localisation, null);
+	public Pnj() {}
+
+
+	public String getNom() {
+		return nom;
+	}
+
+
+	public String getNomPortrait() {
+		return nomPortrait;
+	}
+
+
+	public String[] getDialogue() {
+		return dialogue;
+	}
+
+
+	public void setDialogue(String[] dialogue) {
+		this.dialogue = dialogue;
 	}
 }

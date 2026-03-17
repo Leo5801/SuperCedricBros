@@ -15,30 +15,36 @@ public class GestionnaireJeu {
 	
 	
     private FenetrePrincipale fenetre;
-    private Map<String, Lieu> catalogue;
+    private Map<String, Lieu> catalogueSalles;
     private Lieu lieuActuel;
     private boolean aCasquette;
     
 
     public GestionnaireJeu(FenetrePrincipale fenetre, Map<String, Lieu> catalogue) {
         this.fenetre = fenetre;
-        this.catalogue = catalogue;
+        this.catalogueSalles = catalogue;
+        this.lieuActuel = new Lieu();
         this.aCasquette = true;
     }
 
     
 
-    public void afficherLieu(String nomLieu) {
-        //si on change de pièce on repasse devant
-        this.lieuActuel = catalogue.get(nomLieu);
-        rafraichirAffichage();
-        fenetre.viderZoneTexte();
-        fenetre.afficherDescription(lieuActuel.getDescription());
+    public void afficherLieu(Lieu nouveauLieu) {
+    	Lieu ancienLieu = this.lieuActuel;
+    	this.lieuActuel = nouveauLieu;
+		rafraichirAffichage();
+		
+		//si le joueur se retourne on vide pas le texte et on n'affiche pas la description
+    	if(ancienLieu.getLieuOpposé() != nouveauLieu) {
+    		
+    		fenetre.viderZoneTexte();
+            fenetre.afficherDescription(lieuActuel.getDescription());
+    	} 
     }
 
+    
     // Cette méthode est la big boss de l'affichage
     private void rafraichirAffichage() {
-    	
         fenetre.viderActions();
         fenetre.setSalle(lieuActuel.getNom());
         
@@ -46,15 +52,28 @@ public class GestionnaireJeu {
         for (Action a : lieuActuel.getActions()) {
             	genererBouton(a);
         }
-   
+        
+        
+        for (Pnj p : lieuActuel.getPersos()) {
+        	JButton btn = new JButton("Parler à " + p.getNom());
+        	
+        	btn.addActionListener(e -> {
+        		this.afficherDialoguePnj(p.getNom(), p.getDialogue()[0]);
+        	});
+    
+            fenetre.ajouterBoutonAction(btn);
+        }
         
         fenetre.setPortrait(lieuActuel.getMiniMap());
     }
+        
+        
+        
+   
     
 
     
     private void genererBouton(Action a) {
-    	
         JButton btn = new JButton(a.getLabel());
         
         
@@ -65,16 +84,10 @@ public class GestionnaireJeu {
                 this.afficherLieu(acm.getDestination());
                 
             } else if(a instanceof ActionChangementVue) {
-            	
             	ActionChangementVue ad = (ActionChangementVue) a;
             	this.changerVue(ad.getDestination());
             	fenetre.afficherTexte(ad.getTexte());
             	
-            } else if(a instanceof ActionDialoguePnj) {
-                // On "cast" pour accéder au texte du dialoguePnj
-                ActionDialoguePnj ad = (ActionDialoguePnj) a;
-                this.afficherDialoguePnj(ad.getLeNomDuPerso(), ad.getTexte());
-                
             } else if(a instanceof ActionDialogue) {
             	// On "cast" pour accéder au texte du dialoguePnj
             	ActionDialogue ad = (ActionDialogue) a;
@@ -89,8 +102,7 @@ public class GestionnaireJeu {
     
     
     private void afficherDialoguePnj(String leNomPnj, String leTexte) {
-    	
-    	if(leNomPnj == "eroll") {
+    	if("eroll".equals(leNomPnj)) {
     		if(aCasquette) {
     			leNomPnj += "AvecCasquette";
     		} else {
@@ -105,7 +117,6 @@ public class GestionnaireJeu {
     
     
     public void changerVue(String laNouvelleVue) {
-    	
     	fenetre.setSalle(laNouvelleVue);
     	Component[] mesComposants = fenetre.getBoutons();
     	
@@ -131,29 +142,22 @@ public class GestionnaireJeu {
     
     
     public static void main(String[] args) {
-
     	try {
 		    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Exception e) {}
     	
 
         FenetrePrincipale fenetre = new FenetrePrincipale();
-        Map<String, Lieu> catalogue = GenerateurJeu.creerLeMonde();
+        GenerateurJeu remplissage = new GenerateurJeu();
+        remplissage.start();
         
         
-        for(String clé : catalogue.keySet()) {
-        	
-        	if(clé != "couloir") {
-        		Lieu lieuCourant = catalogue.get(clé);
-            	lieuCourant.ajouterAction(new ActionChangementMap("Se retourner", lieuCourant.getLieuOpposé()));
-        	}
-        }
-        
+    
         // On crée le contrôleur
-        GestionnaireJeu controleur = new GestionnaireJeu(fenetre, catalogue);
+        GestionnaireJeu controleur = new GestionnaireJeu(fenetre, remplissage.getCatalogueSalles());
         
         // On lance le premier lieu
-        controleur.afficherLieu("hallDevant");
+        controleur.afficherLieu(controleur.catalogueSalles.get("hallDevant"));
         
         
         fenetre.setVisible(true);
