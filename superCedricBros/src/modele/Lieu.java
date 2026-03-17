@@ -6,95 +6,75 @@ import java.util.List;
 public class Lieu {
 	
 	private String nom;
-	private String nomDevant; //chaque map est divisé en 2, chaque section a des actions propres mais des salles voisines communes
-	private String nomDerriere;
 	private String description;
 	private String miniMap;
-	private List<Action> actionsDevant;
-	private List<Action> actionsDerriere;
+	private String lieuOpposé;
+	private List<Action> actions;
 	
 	
-	public Lieu(String nom, String description) {
+	public Lieu(String nom, String description, String miniMap, String mapOpposée) {
 		super();
 		this.description = description;
 		this.nom = nom;
-		this.nomDevant = this.nom + "Devant";
-		this.nomDerriere = this.nom + "Derriere";
-		this.miniMap = "miniMap" + (this.nom.substring(0,1).toUpperCase() + this.nom.substring(1));
-		this.actionsDevant = new ArrayList<>();
-		this.actionsDerriere = new ArrayList<>();
-	}
-	
-	
-	public Lieu(String nom) {
-		this(nom,null);
+		this.lieuOpposé = mapOpposée;
+		this.miniMap = miniMap;
+		this.actions = new ArrayList<>();
 	}
 	
 	
 	public Lieu() {}
 	
 	
-	public void ajouterActionDevant(Action action) {
-		this.actionsDevant.add(action);
+	public void ajouterAction(Action action) {
+		
+		this.actions.add(action);
 	}
 	
-	
-	public void ajouterActionDerriere(Action action) {
-		this.actionsDerriere.add(action);
-	}
 
-	
-	public void ajouterActionsDevant(List<Action> actions) {
+	public void ajouterActions(List<Action> actions) {
 		
-		this.actionsDevant.addAll(actions);
+		this.actions.addAll(actions);
 	}
 	
-	
-	public void ajouterActionsDerriere(List<Action> actions) {
-		
-		
-		this.actionsDerriere.addAll(actions);
-	}
 
 	public String getNom() {
+		
 		return this.nom;
 	}
 
 
-	public List<Action> getActionsDerriere() {
-		return this.actionsDerriere;
-	}
-	
-	
-	public List<Action> getActionsDevant() {
-		return this.actionsDevant;
+	public List<Action> getActions() {
+		
+		return this.actions;
 	}
 
 
 	public String getDescription() {
+		
 		return description;
 	}
 
 	public String getMiniMap() {
+		
 		return miniMap;
 	}
 
-	public String getNomDevant() {
-		return nomDevant;
-	}
-
-	public String getNomDerriere() {
-		return nomDerriere;
-	}
 
 	public void setNom(String nom) {
+		
 		this.nom = nom;
 	}
 
+	
 	public void setDescription(String description) {
+		
 		this.description = description;
 	}
 	
 	
+	public String getLieuOpposé() {
+		
+		return this.lieuOpposé;
+	}
 	
 }

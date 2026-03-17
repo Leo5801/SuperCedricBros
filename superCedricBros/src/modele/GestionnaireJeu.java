@@ -17,14 +17,12 @@ public class GestionnaireJeu {
     private FenetrePrincipale fenetre;
     private Map<String, Lieu> catalogue;
     private Lieu lieuActuel;
-    private boolean estDerriere;
     private boolean aCasquette;
     
 
     public GestionnaireJeu(FenetrePrincipale fenetre, Map<String, Lieu> catalogue) {
         this.fenetre = fenetre;
         this.catalogue = catalogue;
-        this.estDerriere = false;
         this.aCasquette = true;
     }
 
@@ -32,7 +30,6 @@ public class GestionnaireJeu {
 
     public void afficherLieu(String nomLieu) {
         //si on change de pièce on repasse devant
-        this.estDerriere = false; 
         this.lieuActuel = catalogue.get(nomLieu);
         rafraichirAffichage();
         fenetre.viderZoneTexte();
@@ -43,48 +40,18 @@ public class GestionnaireJeu {
     private void rafraichirAffichage() {
     	
         fenetre.viderActions();
+        fenetre.setSalle(lieuActuel.getNom());
         
-
-        if (estDerriere) {
-            fenetre.setSalle(lieuActuel.getNomDerriere());
-            
-            // On charge les boutons spécifiques à l'arrière
-            for (Action a : lieuActuel.getActionsDerriere()) {
+        
+        for (Action a : lieuActuel.getActions()) {
             	genererBouton(a);
-            }
-        } else {
-            fenetre.setSalle(lieuActuel.getNomDevant());
-            
-            // On charge les boutons spécifiques devant
-            for (Action a : lieuActuel.getActionsDevant()) {
-            	genererBouton(a);
-            }
         }
-        
-        
-        // On ajoute le bouton pour se retourner sauf dans le couloir
-        if(this.lieuActuel.getNom() != "couloir") {
-        	ajouterBoutonRetournement();
-        }
-        
+   
         
         fenetre.setPortrait(lieuActuel.getMiniMap());
     }
-
-    private void ajouterBoutonRetournement() {
-    	
-        JButton btn = new JButton("Se retourner");
-        
-        //on ajoute le bouton se retourner à chaque map sauf couloir, qui permet d'inverser l'état
-        btn.addActionListener(e -> {
-            this.estDerriere = !this.estDerriere; // On inverse l'état
-            rafraichirAffichage(); // On relance la mise à jour
-        });
-        
-        
-        fenetre.ajouterBoutonAction(btn);
-    }
     
+
     
     private void genererBouton(Action a) {
     	
@@ -149,23 +116,12 @@ public class GestionnaireJeu {
     	
         
         btn.addActionListener(e -> {
-            if(estDerriere) {
-            	fenetre.setSalle(lieuActuel.getNomDerriere());
-            	fenetre.viderActions();
-            	for(Component c : mesComposants) {
-            		if(c instanceof JButton) {
-            			JButton bouton = (JButton) c;
-            			fenetre.ajouterBoutonAction(bouton);
-            		}
-            	}
-            } else {
-            	fenetre.setSalle(lieuActuel.getNomDevant());
-            	fenetre.viderActions();
-            	for(Component c : mesComposants) {
-            		if(c instanceof JButton) {
-            			JButton bouton = (JButton) c;
-            			fenetre.ajouterBoutonAction(bouton);
-            		}
+            fenetre.setSalle(lieuActuel.getNom());
+            fenetre.viderActions();
+            for(Component c : mesComposants) {
+            	if(c instanceof JButton) {
+            		JButton bouton = (JButton) c;
+            		fenetre.ajouterBoutonAction(bouton);
             	}
             }
         });
@@ -185,11 +141,19 @@ public class GestionnaireJeu {
         Map<String, Lieu> catalogue = GenerateurJeu.creerLeMonde();
         
         
+        for(String clé : catalogue.keySet()) {
+        	
+        	if(clé != "couloir") {
+        		Lieu lieuCourant = catalogue.get(clé);
+            	lieuCourant.ajouterAction(new ActionChangementMap("Se retourner", lieuCourant.getLieuOpposé()));
+        	}
+        }
+        
         // On crée le contrôleur
         GestionnaireJeu controleur = new GestionnaireJeu(fenetre, catalogue);
         
         // On lance le premier lieu
-        controleur.afficherLieu("hall");
+        controleur.afficherLieu("hallDevant");
         
         
         fenetre.setVisible(true);
