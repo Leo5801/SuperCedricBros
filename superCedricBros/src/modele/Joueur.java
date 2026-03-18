@@ -1,11 +1,11 @@
 package modele;
 
-import modèle.Entité;
 
 public class Joueur extends Entité {
    
     private int pvActuel;
     private int pvMax;
+    private Item[] inventaire = new Item[3];
 
     public Joueur() {
     }
@@ -29,43 +29,29 @@ public class Joueur extends Entité {
     }
 
     
-    public void consommerItem(/* Item item */) {
-    	
-        // Pseudo-code : vérifier si l'item est une boisson
-        // if (item est une boisson) {
 
-    	
-    	
-    	
-    	
-    	
-        // Condition 1 : les PV actuels doivent être inférieurs au PV max
-        if (pvActuel < pvMax) {
-    
-            // Condition 2 : le joueur consomme une boisson
-            // Exemple : if( item.getType() == "boisson")
-        	
-        	
-        	
-            pvActuel += 1; // le joueur regagne 1 PV
-            
-            
-            
-            if (pvActuel == pvMax) {
-                pvActuel = pvMax; // on ne dépasse jamais le PV max
-            }
-        }
 
-        // }
-    }
-
-	String getPvActuel() {
+	int getPvActuel() {
 		
-		return null;
+		return this.pvActuel;
 	}
 
-	String getPvMax() {
+	int getPvMax() {
 		
-		return null;
+		return this.pvMax;
+	}
+
+	public Item[] getInventaire() {
+		return inventaire;
+	}
+
+	public void setInventaire(Item[] inventaire) {
+		this.inventaire = inventaire;
+	}
+	
+	
+	public void ajouterItem(int i, Item objet) {
+		
+		this.inventaire[i] = objet;
 	}
 }

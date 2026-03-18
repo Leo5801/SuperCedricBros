@@ -26,7 +26,8 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 
-import modele.Item2;
+import modele.GestionnaireJeu;
+import modele.Item;
 
 public class FenetrePrincipale extends JFrame{
 	
@@ -37,6 +38,7 @@ public class FenetrePrincipale extends JFrame{
     private JLabel portraitPNJ;
     private JTextArea zoneTexte;
     private JLabel[] slotObjet;
+    private GestionnaireJeu controleur;
 	
 	private Map<String, ImageIcon> cacheImages; // petit tableau associatif qui contiendra les maps et les portraits 
 	
@@ -140,6 +142,15 @@ public class FenetrePrincipale extends JFrame{
             this.slotObjet[i].setBackground(new Color(230, 230, 230)); // Fond légèrement grisé
             this.slotObjet[i].setOpaque(true); // Obligatoire pour voir la couleur de fond
             this.slotObjet[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            final int index = i;
+            this.slotObjet[i].addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    
+                    if (controleur != null) {
+                        controleur.clicSurSlot(index);
+                    }
+                }
+            });
             panneauInventaire.add(this.slotObjet[i]);
         }
         
@@ -350,7 +361,7 @@ public class FenetrePrincipale extends JFrame{
     }
     
     
-    public void setObjetUsuel(Item2 objet) {
+    public void setObjetUsuel(Item objet) {
         Integer index = this.premierSlotDispo();
         
         if (index != null) {
@@ -379,4 +390,22 @@ public class FenetrePrincipale extends JFrame{
     	
     	return this.zoneBoutonsChoix.getComponents();
     }
+
+
+	public JProgressBar getBarreVie() {
+		return barreVie;
+	}
+
+
+
+	public JLabel[] getSlotObjet() {
+		return slotObjet;
+	}
+
+
+	public void setControleur(GestionnaireJeu controleur) {
+        this.controleur = controleur;
+    }
+    
+    
 }

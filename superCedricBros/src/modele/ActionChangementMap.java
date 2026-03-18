@@ -21,7 +21,6 @@ public class ActionChangementMap extends Action {
 	
 	
 	public void executer(GestionnaireJeu g) {
-		
 		g.afficherLieu(this.destination);
 	}
 	

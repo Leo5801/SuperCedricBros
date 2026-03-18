@@ -13,7 +13,8 @@ public class GenerateurJeu {
 	
 	private Map<String,Lieu> catalogueSalles = new HashMap<>();
 	private Map<String,Pnj> cataloguePnj = new HashMap<>();
-	private Map<String,Item2> catalogueItems = new HashMap<>();
+	private Map<String,Item> catalogueItems = new HashMap<>();
+	
 	
 	public GenerateurJeu() {}
 	
@@ -34,6 +35,7 @@ public class GenerateurJeu {
 		this.ajouterCatalogueSalles(new Lieu("salleMichuDerriere", "", "miniMapSalleMichu", "Aller dans la salle de madame Michu"));
 		this.ajouterCatalogueSalles(new Lieu("salleRemiDevant", "Il est si musclé...", "miniMapSalleRemi", "Aller dans la salle de Rémi"));
 		this.ajouterCatalogueSalles(new Lieu("salleRemiDerriere", "Il est si musclé...", "miniMapSalleRemi", "Aller dans la salle de Rémi"));
+		this.ajouterCatalogueSalles(new Lieu("monik", "Cedric : ok je suis foutu...\n*Cedric perd 25 PV*", "", ""));
 		//fin de la création des maps
 		
 		
@@ -136,18 +138,18 @@ public class GenerateurJeu {
 	
 	
 	public void creerLesPersos() {
-		
 		String[] test = {"coucou"};
 		ajouterCataloguePnj(new Pnj("eroll", "erollAvecCasquette",test));
 		ajouterCataloguePnj(new Pnj("nina", "nina",test));
 		ajouterCataloguePnj(new Pnj("marcus", "marcus", test));
 		ajouterCataloguePnj(new Pnj("mme michu", "michu", test));
+		
 	}
 	
 	
 	public void creerLesItems() {
 		
-		ajouterCatalogueItems(new Item2("cafe", "Ouvrir la malette", "Cedric :  ce n'est pas une valise mais un thermos géant à café ! j'en prends un peu", false));
+		ajouterCatalogueItems(new Item("cafe", "Ouvrir la malette", "Cedric :  ce n'est pas une valise mais un thermos géant à café ! j'en prends un peu", 25,false));
 	}
 	
 	
@@ -177,7 +179,7 @@ public class GenerateurJeu {
 	}
 	
 	
-	private void ajouterCatalogueItems(Item2 i) {
+	private void ajouterCatalogueItems(Item i) {
 		
 		catalogueItems.put(i.getNom(), i);
 	}
@@ -199,7 +201,6 @@ public class GenerateurJeu {
 		
 		return this.cataloguePnj;
 	}
-	
 }
 	
 	

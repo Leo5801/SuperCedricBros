@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.swing.JButton;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 import affichage.FenetrePrincipale;
@@ -17,12 +20,14 @@ public class GestionnaireJeu {
     private FenetrePrincipale fenetre;
     private Map<String, Lieu> catalogueSalles;
     private Lieu lieuActuel;
+    private Joueur persoPrincipal;
     
 
     public GestionnaireJeu(FenetrePrincipale fenetre, Map<String, Lieu> catalogue) {
         this.fenetre = fenetre;
         this.catalogueSalles = catalogue;
         this.lieuActuel = new Lieu();
+        this.persoPrincipal = new Joueur(100, 100);
     }
     
 
@@ -37,6 +42,34 @@ public class GestionnaireJeu {
     		fenetre.viderZoneTexte();
             fenetre.afficherDescription(lieuActuel.getDescription());
     	} 
+    	
+    	this.monik();
+    }
+    
+    
+    public void monik() {
+    	
+    	Random aleatoire = new Random();
+    	
+    	
+    	if(aleatoire.nextInt(8) == 0) {
+    		this.changementPvJoueur(-25);
+    		
+    		
+    		Lieu monik = this.catalogueSalles.get("monik");
+    		this.fenetre.setSalle(monik.getNom());
+    		this.fenetre.viderActions();
+    		this.fenetre.afficherTexte(monik.getDescription());
+    		
+    		Timer timerRetour = new Timer(3000, e -> {
+                // Cette partie s'exécute APRES les 3 secondes
+                this.rafraichirAffichage(); // On utilise ta méthode existante pour tout rafraîchir
+                this.fenetre.afficherTexte("*Monik a disparu... pour l'instant.*");
+            });
+
+            timerRetour.setRepeats(false); // TRÈS IMPORTANT : pour que ça n'arrive qu'une fois
+            timerRetour.start();
+    	}
     }
 
     
@@ -63,19 +96,20 @@ public class GestionnaireJeu {
         }
         
         //on affiche les boutons pour prendre les objets
-        for(Item2 i : lieuActuel.getObjets()) {
+        for(Item i : lieuActuel.getObjets()) {
         	
         	JButton btn = new JButton(i.getLabel());
+        	int index = fenetre.premierSlotDispo();
         	
         	btn.addActionListener(e -> {
-        		if(i.getEstQuete()) {
+        		if(i.getIsItemDeQuete()) {
         			
         		} else {
+        			this.persoPrincipal.ajouterItem(index, i);
         			this.fenetre.setObjetUsuel(i);
         		}
-        		this.rafraichirAffichage();
         		lieuActuel.retirerObjet(i);
-        		
+        		this.rafraichirAffichage();
         	});
         	
         	fenetre.ajouterAction(btn);
@@ -136,6 +170,30 @@ public class GestionnaireJeu {
     }
     
     
+    public void changementPvJoueur(int montant) {
+    	this.persoPrincipal.changerPv(montant);
+    	fenetre.getBarreVie().setValue(this.persoPrincipal.getPvActuel());
+    	this.rafraichirAffichage();
+    }
+    
+    
+    public void clicSurSlot(int index) {
+        Item itemChoisi = this.persoPrincipal.getInventaire()[index];
+        
+        if (itemChoisi != null) {
+            this.fenetre.afficherTexte("Cédric utilise : " + itemChoisi.getNom());
+            this.changementPvJoueur(itemChoisi.getPvRendue());
+            // C'est ici que la magie opère !
+            // Si ton item est une Action (Pattern Command), tu fais :
+            // itemChoisi.executer(this);
+            
+            // Puis on vide le slot si l'objet est consommé
+            this.persoPrincipal.getInventaire()[index] = null;
+            this.fenetre.mettreAJourSlot(this.fenetre.getSlotObjet()[index], "vide");
+        }
+    }
+    
+    
     public static void main(String[] args) {
     	try {
 		    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -149,6 +207,8 @@ public class GestionnaireJeu {
     
         // On crée le contrôleur
         GestionnaireJeu controleur = new GestionnaireJeu(fenetre, remplissage.getCatalogueSalles());
+        fenetre.setControleur(controleur);
+        fenetre.getBarreVie().setValue(controleur.persoPrincipal.getPvActuel());
         
         // On lance le premier lieu
         controleur.afficherLieu(controleur.catalogueSalles.get("hallDevant"));

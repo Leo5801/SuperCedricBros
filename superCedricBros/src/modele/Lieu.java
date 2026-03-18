@@ -13,7 +13,7 @@ public class Lieu {
 	private List<Action> actions;
 	private List<Lieu> lieuxVoisins;
 	private List<Pnj> persos;
-	private List<Item2> objets;
+	private List<Item> objets;
 	
 	
 	public Lieu(String nom, String description, String miniMap, String labelBouton) {
@@ -83,7 +83,7 @@ public class Lieu {
 	}
 	
 	
-	public List<Item2> getObjets(){
+	public List<Item> getObjets(){
 		
 		return this.objets;
 	}
@@ -112,13 +112,13 @@ public class Lieu {
 	}
 	
 	
-	public void ajouterObjet(Item2 nouveau) {
+	public void ajouterObjet(Item nouveau) {
 		
 		this.objets.add(nouveau);
 	}
 	
 	
-	public void retirerObjet(Item2 retrait) {
+	public void retirerObjet(Item retrait) {
 		this.objets.remove(retrait);
 	}
 }

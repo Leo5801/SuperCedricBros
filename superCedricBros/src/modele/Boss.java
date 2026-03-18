@@ -2,8 +2,6 @@ package modele;
 
 import java.util.Random;
 
-import modèle.Entité;
-
 public class Boss extends Entité {
 
 	private int id;
