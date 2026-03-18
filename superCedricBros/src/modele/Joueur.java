@@ -1,4 +1,6 @@
-package modèle;
+package modele;
+
+import modèle.Entité;
 
 public class Joueur extends Entité {
    
