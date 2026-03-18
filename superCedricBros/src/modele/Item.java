@@ -33,4 +33,11 @@ public class Item {
 		
 		return this.estQuete;
 	}
+	
+	
+	public String getTexteRamassage() {
+		
+		return this.texteRamassage;
+	}
 }
+

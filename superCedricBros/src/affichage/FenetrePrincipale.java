@@ -34,7 +34,7 @@ public class FenetrePrincipale extends JFrame{
     private JLabel slotItemQuete;        
     private JLabel portraitPNJ;
     private JTextArea zoneTexte;
-    private JLabel slotObjet;
+    private JLabel[] slotObjet;
 	
 	private Map<String, ImageIcon> cacheImages; // petit tableau associatif qui contiendra les maps et les portraits 
 	
@@ -54,6 +54,7 @@ public class FenetrePrincipale extends JFrame{
         this.prepareCache("objet", 50, 50);
         
         //on charge la fenêtre
+        this.slotObjet = new JLabel[3];
         this.initialiserComposants();
 	}
 	
@@ -121,22 +122,25 @@ public class FenetrePrincipale extends JFrame{
                 TitledBorder.CENTER, TitledBorder.TOP,
                 new Font("SansSerif", Font.BOLD, 14)
         ));
-        panneauInventaire.setMaximumSize(new Dimension(200, 220)); 
+        panneauInventaire.setMaximumSize(new Dimension(200, 300)); 
 
         //  Le nouveau slot : Objet en main 
-        panneauInventaire.add(Box.createVerticalStrut(15));
-        JLabel lblObjetMain = new JLabel("Objet usuel :");
-        lblObjetMain.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panneauInventaire.add(lblObjetMain);
-
-        this.slotObjet = new JLabel("--- VIDE ---", SwingConstants.CENTER);
-        this.slotObjet.setPreferredSize(new Dimension(140, 40));
-        this.slotObjet.setMaximumSize(new Dimension(140, 40));
-        this.slotObjet.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        this.slotObjet.setBackground(new Color(230, 230, 230)); // Fond légèrement grisé
-        this.slotObjet.setOpaque(true); // Obligatoire pour voir la couleur de fond
-        this.slotObjet.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panneauInventaire.add(this.slotObjet);
+        for(int i=0; i<3; i++) {
+        	
+        	panneauInventaire.add(Box.createVerticalStrut(15));
+            JLabel lblObjetMain = new JLabel("Objet " + (i+1));
+            lblObjetMain.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panneauInventaire.add(lblObjetMain);
+            this.slotObjet[i] = new JLabel("--- VIDE ---", SwingConstants.CENTER);
+            this.slotObjet[i].setPreferredSize(new Dimension(140, 40));
+            this.slotObjet[i].setMaximumSize(new Dimension(140, 40));
+            this.slotObjet[i].setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+            this.slotObjet[i].setBackground(new Color(230, 230, 230)); // Fond légèrement grisé
+            this.slotObjet[i].setOpaque(true); // Obligatoire pour voir la couleur de fond
+            this.slotObjet[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            panneauInventaire.add(this.slotObjet[i]);
+        }
+        
 
         //  L'ancien slot : Objet de Quête 
         panneauInventaire.add(Box.createVerticalStrut(15));
@@ -345,11 +349,26 @@ public class FenetrePrincipale extends JFrame{
     
     
     public void setObjetUsuel(String nomImage) {
-        this.mettreAJourSlot(this.slotObjet, nomImage);
+        Integer index = this.premierSlotDispo();
+        
+        if (index != null) {
+            mettreAJourSlot(this.slotObjet[index], nomImage);
+        } else {
+            this.afficherTexte("Sac à dos plein !");
+        }
     }
-
-    public void setObjetQuete(String nomImage) {
-        this.mettreAJourSlot(this.slotItemQuete, nomImage);
+    
+    public Integer premierSlotDispo() {
+    	Integer slot = null;
+    	for(Integer i=0; i<3; i++) {
+    		
+    		if(this.slotObjet[i].getIcon() == null) {
+    			slot = i;
+    			break;
+    		}
+    	}
+    	
+    	return slot;
     }
     
     

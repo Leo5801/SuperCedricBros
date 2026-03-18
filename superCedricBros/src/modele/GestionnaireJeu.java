@@ -69,7 +69,7 @@ public class GestionnaireJeu {
         	
         	btn.addActionListener(e -> {
         		if(i.getEstQuete()) {
-        			this.fenetre.setObjetQuete(i.getNom());
+        			
         		} else {
         			this.fenetre.setObjetUsuel(i.getNom());
         		}
@@ -77,7 +77,6 @@ public class GestionnaireJeu {
         		lieuActuel.retirerObjet(i);
         		fenetre.revalidate();
         		fenetre.repaint();
-        		this.fenetre.afficherTexte("Cédric a ramassé : " + i.getLabel());
         	});
         	
         	fenetre.ajouterAction(btn);
