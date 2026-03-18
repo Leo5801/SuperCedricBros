@@ -13,7 +13,7 @@ public class GenerateurJeu {
 	
 	private Map<String,Lieu> catalogueSalles = new HashMap<>();
 	private Map<String,Pnj> cataloguePnj = new HashMap<>();
-	private Map<String,Item> catalogueItems = new HashMap<>();
+	private Map<String,Item2> catalogueItems = new HashMap<>();
 	
 	public GenerateurJeu() {}
 	
@@ -147,7 +147,7 @@ public class GenerateurJeu {
 	
 	public void creerLesItems() {
 		
-		ajouterCatalogueItems(new Item("cafe", "Ouvrir la malette", "Cedric :  ce n'est pas une valise mais un thermos géant à café ! j'en prends un peu", false));
+		ajouterCatalogueItems(new Item2("cafe", "Ouvrir la malette", "Cedric :  ce n'est pas une valise mais un thermos géant à café ! j'en prends un peu", false));
 	}
 	
 	
@@ -177,7 +177,7 @@ public class GenerateurJeu {
 	}
 	
 	
-	private void ajouterCatalogueItems(Item i) {
+	private void ajouterCatalogueItems(Item2 i) {
 		
 		catalogueItems.put(i.getNom(), i);
 	}
