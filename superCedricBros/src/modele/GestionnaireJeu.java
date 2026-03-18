@@ -71,12 +71,11 @@ public class GestionnaireJeu {
         		if(i.getEstQuete()) {
         			
         		} else {
-        			this.fenetre.setObjetUsuel(i.getNom());
+        			this.fenetre.setObjetUsuel(i);
         		}
         		
         		lieuActuel.retirerObjet(i);
-        		fenetre.revalidate();
-        		fenetre.repaint();
+        		
         	});
         	
         	fenetre.ajouterAction(btn);

@@ -26,6 +26,8 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 
+import modele.Item;
+
 public class FenetrePrincipale extends JFrame{
 	
 	private JLabel imagePiece;
@@ -348,11 +350,12 @@ public class FenetrePrincipale extends JFrame{
     }
     
     
-    public void setObjetUsuel(String nomImage) {
+    public void setObjetUsuel(Item objet) {
         Integer index = this.premierSlotDispo();
         
         if (index != null) {
-            mettreAJourSlot(this.slotObjet[index], nomImage);
+            mettreAJourSlot(this.slotObjet[index], objet.getNom());
+            this.afficherTexte(objet.getTexteRamassage());
         } else {
             this.afficherTexte("Sac à dos plein !");
         }
