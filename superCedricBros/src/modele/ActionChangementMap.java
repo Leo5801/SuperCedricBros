@@ -15,14 +15,14 @@ public class ActionChangementMap extends Action {
 	}
 	
 	
-	public void setDestination(Lieu destination) {
-		
-		this.destination = destination;
+	public Lieu getDestination() {
+		return destination;
 	}
 	
 	
-	public Lieu getDestination() {
-		return destination;
+	public void executer(GestionnaireJeu g) {
+		
+		g.afficherLieu(this.destination);
 	}
 	
 }

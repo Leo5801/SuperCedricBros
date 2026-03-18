@@ -17,16 +17,13 @@ public class GestionnaireJeu {
     private FenetrePrincipale fenetre;
     private Map<String, Lieu> catalogueSalles;
     private Lieu lieuActuel;
-    private boolean aCasquette;
     
 
     public GestionnaireJeu(FenetrePrincipale fenetre, Map<String, Lieu> catalogue) {
         this.fenetre = fenetre;
         this.catalogueSalles = catalogue;
         this.lieuActuel = new Lieu();
-        this.aCasquette = true;
     }
-
     
 
     public void afficherLieu(Lieu nouveauLieu) {
@@ -48,52 +45,54 @@ public class GestionnaireJeu {
         fenetre.viderActions();
         fenetre.setSalle(lieuActuel.getNom());
         
-        
-        for (Action a : lieuActuel.getActions()) {
+        //on affiche tous les boutons des actions
+        for(Action a : lieuActuel.getActions()) {
             	genererBouton(a);
         }
         
         
-        for (Pnj p : lieuActuel.getPersos()) {
+        //on affiche tous les dialogues avec PNJ
+        for(Pnj p : lieuActuel.getPersos()) {
         	JButton btn = new JButton("Parler à " + p.getNom());
         	
         	btn.addActionListener(e -> {
-        		this.afficherDialoguePnj(p.getNom(), p.getDialogue()[0]);
+        		this.afficherDialoguePnj(p.getNomPortrait(), "Eroll : " + p.getDialogue()[0]);
         	});
     
             fenetre.ajouterBoutonAction(btn);
+        }
+        
+        //on affiche les boutons pour prendre les objets
+        for(Item i : lieuActuel.getObjets()) {
+        	
+        	JButton btn = new JButton(i.getLabel());
+        	
+        	btn.addActionListener(e -> {
+        		if(i.getEstQuete()) {
+        			this.fenetre.setObjetQuete(i.getNom());
+        		} else {
+        			this.fenetre.setObjetUsuel(i.getNom());
+        		}
+        		
+        		lieuActuel.retirerObjet(i);
+        		fenetre.revalidate();
+        		fenetre.repaint();
+        		this.fenetre.afficherTexte("Cédric a ramassé : " + i.getLabel());
+        	});
+        	
+        	fenetre.ajouterAction(btn);
         }
         
         fenetre.setPortrait(lieuActuel.getMiniMap());
     }
         
         
-        
-   
-    
-
-    
     private void genererBouton(Action a) {
         JButton btn = new JButton(a.getLabel());
         
         
         btn.addActionListener(e -> {
-            if(a instanceof ActionChangementMap) {
-                // On "cast" l'action pour accéder aux méthodes spécifiques du changement de map
-                ActionChangementMap acm = (ActionChangementMap) a;
-                this.afficherLieu(acm.getDestination());
-                
-            } else if(a instanceof ActionChangementVue) {
-            	ActionChangementVue ad = (ActionChangementVue) a;
-            	this.changerVue(ad.getDestination());
-            	fenetre.afficherTexte(ad.getTexte());
-            	
-            } else if(a instanceof ActionDialogue) {
-            	// On "cast" pour accéder au texte du dialoguePnj
-            	ActionDialogue ad = (ActionDialogue) a;
-            	fenetre.afficherTexte(ad.getTexte());
-            	
-            }
+            a.executer(this);
         });
         
         
@@ -101,22 +100,13 @@ public class GestionnaireJeu {
     }
     
     
-    private void afficherDialoguePnj(String leNomPnj, String leTexte) {
-    	if("eroll".equals(leNomPnj)) {
-    		if(aCasquette) {
-    			leNomPnj += "AvecCasquette";
-    		} else {
-    			leNomPnj += "SansCasquette";
-    		}
-    	}
-    	
- 
-    	fenetre.dialoguePnj(leNomPnj, leTexte);
+    private void afficherDialoguePnj(String leNomPortrait, String leTexte) {
+    	fenetre.dialoguePnj(leNomPortrait, leTexte);
     	fenetre.lancerTimerRetourMinimap(this.lieuActuel.getMiniMap());
     }
     
     
-    public void changerVue(String laNouvelleVue) {
+    public void changerVue(String laNouvelleVue, String texte) {
     	fenetre.setSalle(laNouvelleVue);
     	Component[] mesComposants = fenetre.getBoutons();
     	
@@ -137,7 +127,14 @@ public class GestionnaireJeu {
             }
         });
         
+        fenetre.afficherTexte(texte);
         fenetre.ajouterBoutonAction(btn);
+    }
+    
+    
+    public FenetrePrincipale getFenetre() {
+    	
+    	return this.fenetre;
     }
     
     
@@ -150,7 +147,6 @@ public class GestionnaireJeu {
         FenetrePrincipale fenetre = new FenetrePrincipale();
         GenerateurJeu remplissage = new GenerateurJeu();
         remplissage.start();
-        
         
     
         // On crée le contrôleur

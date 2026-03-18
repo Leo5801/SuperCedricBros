@@ -13,6 +13,7 @@ public class Lieu {
 	private List<Action> actions;
 	private List<Lieu> lieuxVoisins;
 	private List<Pnj> persos;
+	private List<Item> objets;
 	
 	
 	public Lieu(String nom, String description, String miniMap, String labelBouton) {
@@ -25,6 +26,7 @@ public class Lieu {
 		this.actions = new ArrayList<>();
 		this.lieuxVoisins = new ArrayList<>();
 		this.persos = new ArrayList<>();
+		this.objets = new ArrayList<>();
 	}
 	
 	
@@ -79,8 +81,13 @@ public class Lieu {
 	public String getLabelBouton() {
 		return this.labelBouton;
 	}
-
 	
+	
+	public List<Item> getObjets(){
+		
+		return this.objets;
+	}
+
 	
 	public void ajouterPnj(Pnj nouveau) {
 		
@@ -102,5 +109,16 @@ public class Lieu {
 	public void ajouterActions(List<Action> actions) {
 		
 		this.actions.addAll(actions);
+	}
+	
+	
+	public void ajouterObjet(Item nouveau) {
+		
+		this.objets.add(nouveau);
+	}
+	
+	
+	public void retirerObjet(Item retrait) {
+		this.objets.remove(retrait);
 	}
 }

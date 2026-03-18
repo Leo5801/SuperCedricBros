@@ -51,6 +51,7 @@ public class FenetrePrincipale extends JFrame{
         this.prepareCache("map",900,500); //on remplit ce dernier des images au bon format, pas besoin d'aller les rechercher à chaque changement
         this.prepareCache("miniMap", 220, 300);
         this.prepareCache("portrait", 220, 360);
+        this.prepareCache("objet", 50, 50);
         
         //on charge la fenêtre
         this.initialiserComposants();
@@ -327,6 +328,28 @@ public class FenetrePrincipale extends JFrame{
     	this.zoneTexte.setCaretPosition(this.zoneTexte.getDocument().getLength());
     	this.zoneTexte.revalidate();
     	this.zoneTexte.repaint();
+    }
+    
+    
+    public void mettreAJourSlot(JLabel slot, String nomImage) {
+        if (this.cacheImages.containsKey(nomImage)) {
+            slot.setIcon(this.cacheImages.get(nomImage));
+            slot.setText(""); // On enlève le texte "VIDE" pour laisser place à l'image
+        } else {
+            slot.setIcon(null);
+            slot.setText("--- VIDE ---");
+        }
+        slot.revalidate();
+        slot.repaint();
+    }
+    
+    
+    public void setObjetUsuel(String nomImage) {
+        this.mettreAJourSlot(this.slotObjet, nomImage);
+    }
+
+    public void setObjetQuete(String nomImage) {
+        this.mettreAJourSlot(this.slotItemQuete, nomImage);
     }
     
     
