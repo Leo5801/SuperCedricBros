@@ -63,7 +63,7 @@ public class GestionnaireJeu {
         }
         
         //on affiche les boutons pour prendre les objets
-        for(Item i : lieuActuel.getObjets()) {
+        for(Item2 i : lieuActuel.getObjets()) {
         	
         	JButton btn = new JButton(i.getLabel());
         	
@@ -73,7 +73,7 @@ public class GestionnaireJeu {
         		} else {
         			this.fenetre.setObjetUsuel(i);
         		}
-        		
+        		this.rafraichirAffichage();
         		lieuActuel.retirerObjet(i);
         		
         	});

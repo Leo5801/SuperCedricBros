@@ -1,6 +1,6 @@
 package modele;
 
-public class Item {
+public class Item2 {
 	
 	private String nom;
 	private String label;
@@ -8,7 +8,7 @@ public class Item {
 	private boolean estQuete;
 	
 	
-	public Item(String nom, String label, String texteRamassage, boolean estQueste) {
+	public Item2(String nom, String label, String texteRamassage, boolean estQueste) {
 		
 		this.nom = nom;
 		this.label = label;

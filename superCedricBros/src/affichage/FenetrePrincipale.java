@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 
-import modele.Item;
+import modele.Item2;
 
 public class FenetrePrincipale extends JFrame{
 	
@@ -350,7 +350,7 @@ public class FenetrePrincipale extends JFrame{
     }
     
     
-    public void setObjetUsuel(Item objet) {
+    public void setObjetUsuel(Item2 objet) {
         Integer index = this.premierSlotDispo();
         
         if (index != null) {
