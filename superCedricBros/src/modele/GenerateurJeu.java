@@ -28,14 +28,15 @@ public class GenerateurJeu {
 		this.ajouterCatalogueSalles(new Lieu("hallDerriere", "Un lieu paisible...","miniMapHall", "Aller dans le hall"));
 		this.ajouterCatalogueSalles(new Lieu("bureauBdeDevant", "Un si grand bureau pour de si petites révisions","miniMapBureauBde", "Aller dans le bureau du bde"));
 		this.ajouterCatalogueSalles(new Lieu("bureauBdeDerriere", "Un si grand bureau pour de si petites révisions","miniMapBureauBde", "Aller dans le bureau du bde"));
-		this.ajouterCatalogueSalles(new Lieu("couloir", "", "miniMapCouloir", "Aller dans le couloir"));
+		this.ajouterCatalogueSalles(new Lieu("couloir", "wow il est balaise lui...", "miniMapCouloir", "Aller dans le couloir"));
 		this.ajouterCatalogueSalles(new Lieu("salleInfoDevant", "Oh l'odeur...", "miniMapSalleInfo", "Aller dans la salle info"));
-		this.ajouterCatalogueSalles(new Lieu("salleInfoDerriere", "Oh l'odeur...", "miniMapSalleInfo", "Aller dans la salle info"));
+		this.ajouterCatalogueSalles(new Lieu("salleInfoDerriere", "C'est pire de derrière...", "miniMapSalleInfo", "Aller dans la salle info"));
 		this.ajouterCatalogueSalles(new Lieu("salleMichuDevant", "", "miniMapSalleMichu", "Aller dans la salle de madame Michu"));
 		this.ajouterCatalogueSalles(new Lieu("salleMichuDerriere", "", "miniMapSalleMichu", "Aller dans la salle de madame Michu"));
 		this.ajouterCatalogueSalles(new Lieu("salleRemiDevant", "Il est si musclé...", "miniMapSalleRemi", "Aller dans la salle de Rémi"));
 		this.ajouterCatalogueSalles(new Lieu("salleRemiDerriere", "Il est si musclé...", "miniMapSalleRemi", "Aller dans la salle de Rémi"));
 		this.ajouterCatalogueSalles(new Lieu("monik", "Cedric : ok je suis foutu...\n*Cedric perd 25 PV*", "", ""));
+
 		//fin de la création des maps
 		
 		
@@ -134,6 +135,47 @@ public class GenerateurJeu {
 		listeActions.add(new ActionDialogue("Prendre un livre", "Synopsis : Un homme, Steve, a vu sa vie bouleversée lorsqu'il a trouvé du diamant en minant chez lui jusqu'à 60 à 100 mètres de profondeur, suivez son évolution."));
 		getSalle("bureauBdeDerriere").ajouterActions(listeActions);
 		//fin bureauBde
+		
+		//couloir
+		listeActions.add(new ActionDialogue("Parler au gardien", "Gardien : Ah toi t'es pas étudiant ici... \nCedric : si si je suis en Master\nGardien : ah ouais ? pourtant t'as pas la tête de quelqu'un qui mange des pâtes depuis 6 mois."));
+		listeActions.add(new ActionDialogue("Demander l'heure au gardien", "Gardien : 14h37.\nCedric : et les cours reprennent à...?\nGardien : 14h00.\nCedric : ..."));
+		listeActions.add(new ActionDialogue("Regarder le tableau d'affichage", "Cedric : 'Réunion annulation des réunions - ANNULÉE'\nCedric : logique."));
+		listeActions.add(new ActionDialogue("Examiner l'extincteur", "Cedric : la dernière vérification date de 2019...\nGardien : chut."));
+		listeActions.add(new ActionDialogue("Lire les petites annonces", "'Cherche coéquipier projet groupe sérieux et motivé - URGENT'\nCedric : posté il y a 3 ans. Toujours là."));
+		listeActions.add(new ActionDialogue("Tenter d'ouvrir une salle", "*verrouillé*\nGardien : t'as pas le badge.\nCedric : et si j'avais le badge ?\nGardien : t'aurais quand même pas le droit."));
+		listeActions.add(new ActionDialogue("Regarder sous le tapis de l'entrée", "Cedric : oh une clé !\nGardien : c'est la clé des toilettes, elle est là depuis 2018, personne n'a jamais posé la question."));
+		listeActions.add(new ActionDialogue("Demander le wifi au gardien", "Gardien : c'est 'Fac-Wifi-Officiel'\nCedric : le mot de passe ?\nGardien : 'Fac-Wifi-Officiel'\nCedric : ...ça marche pas.\nGardien : je sais."));
+		getSalle("couloir").ajouterActions(listeActions);
+		listeActions = new ArrayList<>();
+		//fin couloir
+		
+		
+		//salleInfoDerriere
+		listeActions.add(new ActionDialogue("Parler à Stéphane", "Stéphane : ouais donc moi j'ai commencé le TP... enfin j'ai ouvert Eclipse\nCedric : c'est bien\nStéphane : ouais ça fait 1h"));
+
+		listeActions.add(new ActionDialogue("Parler à Cédric2", "Cédric2 : *dit quelque chose en mandarin*\nCedric : euh...\nCédric2 : *montre son écran*\nCedric : ... il a déjà fini le TP de la semaine prochaine."));
+
+		listeActions.add(new ActionDialogue("Regarder l'écran de la rangée intelligente", "Cedric : ... ils codent en vim, sans souris, avec 3 terminaux ouverts.\nCedric : l'un d'eux compile sans erreur.\nCedric : je me sens mal."));
+
+		listeActions.add(new ActionDialogue("Tenter de communiquer avec tout le monde", "Cedric : bon... quelqu'un peut m'aider ?\n*silence*\nStéphane: je sais pas\nOussama : wallah moi non plus\nCédric2 : *envoie le corrigé complet sur le chat sans rien dire*\nCedric : ...merci je crois"));
+
+		listeActions.add(new ActionDialogue("Regarder le chat de classe", "[14:02] Cédric2 : *envoie le TP entier résolu*\n[14:03] Oussama : t'es un dieu\n[14:03] Stéphane : merci bg\n[14:04] Cédric2 : *envoie le TP de la semaine prochaine*\n[14:04] Tout le monde : ???"));
+
+		listeActions.add(new ActionDialogue("Demander de l'aide à la rangée intelligente", "Cedric : hé, tu peux m'expliquer le TP ?\nLéo : *explique en 40 secondes chrono, avec un schéma, deux analogies et une optimisation que le prof connaît pas*\nCedric : ...\nCedric : et en plus lent ?\nLéo : *recommence encore plus vite*"));
+
+
+		getSalle("salleInfoDerriere").ajouterActions(listeActions);
+		listeActions = new ArrayList<>();
+		//fin salleInfoDerriere
+		
+		//salleInfoDevant
+		listeActions.add(new ActionDialogue("Parler à Oussama", "Oussama : wallah frère le prof il nous a donné 6 TPs pour demain\nCedric : t'as commencé ?\nOussama : j'ai ouvert le sujet\nCedric : et ?\nOussama : y'a écrit 'bon courage' en bas... j'ai fermé."));
+		listeActions.add(new ActionDialogue("Regarder l'écran de la rangée paresseuse", "Cedric : Adam regarde YouTube.\nMehdi regarde Adam regarder YouTube.\nWissem dort.\nOussama surveille que le prof arrive pas.\nC'est un système rodé."));
+		listeActions.add(new ActionDialogue("Réveiller Wissem", "Cedric : hé, t'es réveillé ?\nWissem : ouais ouais je réfléchis\nCedric : t'avais les yeux fermés\nWissem : c'est pour mieux me concentrer\n*se rendort*"));
+		getSalle("salleInfoDevant").ajouterActions(listeActions);
+		listeActions = new ArrayList<>();
+		
+		
 	}
 	
 	
