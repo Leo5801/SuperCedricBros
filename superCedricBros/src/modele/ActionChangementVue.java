@@ -2,33 +2,25 @@ package modele;
 
 public class ActionChangementVue extends Action {
 	
-	private String destination;
-	private String texte;
+	private Vue destination;
 	
 	
-	public ActionChangementVue(String label, String texte, String destination) {
+	public ActionChangementVue(String label, Vue destination) {
 		
 		super(label);
-		this.texte = texte;
 		this.destination = destination;
 	}
 	
 	
-	public String getTexte() {
-		
-		return this.texte;
-	}
-	
-	
-	public String getDestination() {
+	public Vue getDestination() {
 		
 		return this.destination;
 	}
 	
-	
+
 	public void executer(GestionnaireJeu g) {
 		
-		g.changerVue(this.destination, this.texte);
+		g.gererVue(this.destination);;
 	}
 
 	

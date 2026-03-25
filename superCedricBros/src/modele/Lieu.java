@@ -121,4 +121,12 @@ public class Lieu {
 	public void retirerObjet(Item retrait) {
 		this.objets.remove(retrait);
 	}
+
+
+	public void retirerObjetParNom(Item i) {
+		
+		this.objets.remove(i);
+	}
+	
+	
 }

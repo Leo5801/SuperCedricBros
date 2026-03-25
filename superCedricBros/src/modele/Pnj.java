@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 public class Pnj {
 
 	private String nom;
@@ -35,5 +37,14 @@ public class Pnj {
 
 	public void setDialogue(String[] dialogue) {
 		this.dialogue = dialogue;
+	}
+	
+	
+	public String parler() {
+		
+		Random aleatoire = new Random();
+		int parole = aleatoire.nextInt(this.dialogue.length);
+		
+		return this.dialogue[parole];
 	}
 }

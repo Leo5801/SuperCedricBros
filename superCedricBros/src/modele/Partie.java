@@ -1,94 +1,115 @@
 package modele;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.File;
 
-public class Partie {
-    private String dateCreation;
-    private Compte compte;
-    private int etapeQueteCourante;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Partie(String dateCreation, Compte compte) {
-        this.dateCreation = dateCreation;
-        this.compte = compte;
-        this.etapeQueteCourante = 0;
-    }
 
-    // Sauvegarde la partie dans un fichier propre à chaque joueur
-    // Ex : sauvegarde_Cedric.txt
-    public void sauvegarder() {
-    	 try {
-             String nomFichier = "sauvegarde_" + compte.getPseudo() + ".txt";
-             BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier));
-  
-             writer.write(dateCreation);
-             writer.newLine();
-             writer.write(compte.getPseudo());
-             writer.newLine();
-             writer.write(compte.getMDP());
-             writer.newLine();
-             writer.write(String.valueOf(etapeQueteCourante));
-  
-             writer.close();
-             System.out.println("Partie sauvegardée dans " + nomFichier);
-  
-         } catch (Exception e) {
-             System.out.println("Erreur lors de la sauvegarde : " + e.getMessage());
-         }
-    }//on ecrit dans le fichier de sauvegarde la date de création, le pseudo, le mot de passe et l'étape de quête courante pour pouvoir reprendre la partie plus tard
-       
+public class Partie implements Serializable {
     
-    // Charge la partie depuis le fichier du joueur
-    public void charger() {
-        try {
-            String nomFichier = "sauvegarde_" + compte.getPseudo() + ".txt";
-            BufferedReader reader = new BufferedReader(new FileReader(nomFichier));
-
-            this.dateCreation = reader.readLine();
-            String pseudo = reader.readLine();
-            String mdp = reader.readLine();
-            this.etapeQueteCourante = Integer.parseInt(reader.readLine());
-
-            reader.close();
-
-            // On vérifie que c'est bien le bon compte
-            if (compte.seConnecter(pseudo, mdp)) {
-                System.out.println("Reprise de la partie à l'étape : " + etapeQueteCourante);
-            } else {
-                System.out.println("Ce n'est pas le bon compte !");
-                this.etapeQueteCourante = 0;
-            }
-
-        } catch (Exception e) {
-            System.out.println("Aucune sauvegarde trouvée pour " + compte.getPseudo());
-            System.out.println("Nouvelle partie créée.");
-            this.etapeQueteCourante = 0;
-        }
-    }
-
-    // Vérifie si une sauvegarde existe deja pour ce joueur
-    public boolean compteExiste() {
-        String nomFichier = "sauvegarde_" + compte.getPseudo() + ".txt";
-        return new File(nomFichier).exists();//predefini en java
-    }
-
-    public String getDateCreation() {
-        return dateCreation;
-    }
-
-    public Compte getCompte() {
-        return compte;
-    }
-
-    public int getEtapeQueteCourante() {
-        return etapeQueteCourante;
-    }
-
-    public void setEtapeQueteCourante(int etapeQueteCourante) {
-        this.etapeQueteCourante = etapeQueteCourante;
-    }
-    //A voir avec JEAN et LEO l'agreation entre Partie et Lieu
     
+    private static final long serialVersionUID = 1L;
+
+    // progession
+    private String nomLieuActuel;
+    private EtatJeu etatActuel;
+    private List<String> objetsRamasses = new ArrayList<>();
+
+    // joueur
+    private int pvActuel;
+    private int pvMax;
+    private boolean[] progressionQuetes;
+    
+    // inventaire
+    // On ne stocke que les NOMS (IDs) des items. 
+    // Le Gestionnaire ira les rechercher dans le catalogue au chargement.
+    private String[] nomsItemsInventaire;
+
+    public Partie() {
+        this.nomsItemsInventaire = new String[3];
+    }
+
+
+    public String getNomLieuActuel() {
+    	
+    	return nomLieuActuel; 
+    }
+    
+    
+    public void setNomLieuActuel(String nomLieuActuel) {
+    	
+    	this.nomLieuActuel = nomLieuActuel; 
+    }
+
+    
+    public EtatJeu getEtatActuel() { 
+    	
+    	return etatActuel; 
+    }
+    
+    
+    public void setEtatActuel(EtatJeu etatActuel) { 
+    	
+    	this.etatActuel = etatActuel; 
+    }
+    
+
+    public int getPvActuel() { 
+    	return pvActuel; 
+    }
+    
+    
+    public void setPvActuel(int pvActuel) { 
+    	
+    	this.pvActuel = pvActuel; 
+    }
+    
+
+    public int getPvMax() { 
+    	
+    	return pvMax; 
+    }
+    
+    
+    public void setPvMax(int pvMax) { 
+    	
+    	this.pvMax = pvMax; 
+    }
+    
+
+    public String[] getNomsItemsInventaire() { 
+    	
+    	return nomsItemsInventaire; 
+    }
+    
+    
+    public void setNomsItemsInventaire(String[] noms) { 
+    	
+    	this.nomsItemsInventaire = noms; 
+    }
+
+
+	public void setProgressionQuetes(boolean[] quetes) {
+		
+		this.progressionQuetes = quetes;
+	}
+	
+	
+	public boolean[] getProgressionQuetes() {
+		
+		return this.progressionQuetes;
+	}
+
+
+	public List<String> getObjetsRamasses() {
+		return objetsRamasses;
+	}
+
+
+	public void setObjetsRamasses(List<String> objetsRamasses) {
+		this.objetsRamasses = objetsRamasses;
+	}
+	
+	
+	
 }
