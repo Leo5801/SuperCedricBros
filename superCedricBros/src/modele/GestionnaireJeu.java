@@ -106,7 +106,7 @@ public class GestionnaireJeu  {
         
         this.lieuActuel = this.catalogueSalles.get("hallDevant");
         
-        GenerateurJeu2 generateur = new GenerateurJeu2(); 
+        GenerateurJeu generateur = new GenerateurJeu(); 
         generateur.start();
         this.catalogueSalles = generateur.getCatalogueSalles();
         this.catalogueItems = generateur.getCatalogueItems();
@@ -376,7 +376,7 @@ public class GestionnaireJeu  {
     	
 
         FenetrePrincipale fenetre = new FenetrePrincipale();
-        GenerateurJeu2 remplissage = new GenerateurJeu2();
+        GenerateurJeu remplissage = new GenerateurJeu();
         remplissage.start();
         
     

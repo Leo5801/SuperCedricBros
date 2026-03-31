@@ -127,11 +127,11 @@ public class FenetrePrincipale extends JFrame{
         
         //on crée la zone des boutons, on l'ajoute au sud de la fenêtre (espace dédié)
         JPanel panneauSud = new JPanel(new BorderLayout());
-        panneauSud.setPreferredSize(new Dimension(0, 250));
+        panneauSud.setPreferredSize(new Dimension(0, 300));
         
         //on ajoute les boutons en bas
         this.zoneBoutonsChoix = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        this.zoneBoutonsChoix.setPreferredSize(new Dimension(0, 60));
+        this.zoneBoutonsChoix.setPreferredSize(new Dimension(0, 80));
         panneauSud.add(this.zoneBoutonsChoix, BorderLayout.SOUTH);
        
         //on ajoute la zone de texte défilante
@@ -279,7 +279,7 @@ public class FenetrePrincipale extends JFrame{
         regles.setAlignmentX(Component.CENTER_ALIGNMENT);
         // centrage des règles dans le cadre
         regles.setMargin(new Insets(10, 50, 10, 50)); 
-        regles.setMaximumSize(new Dimension(600, 250));
+        regles.setMaximumSize(new Dimension(700, 500));
 
         // pour saisir le nom de la sauvegarde
         this.champNom = new JTextField(15);

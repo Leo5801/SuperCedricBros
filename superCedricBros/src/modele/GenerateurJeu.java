@@ -11,6 +11,7 @@ import affichage.FenetrePrincipale;
 
 public class GenerateurJeu {
 	
+	private Map<String, Vue> catalogueVues = new HashMap<>();
 	private Map<String,Lieu> catalogueSalles = new HashMap<>();
 	private Map<String,Pnj> cataloguePnj = new HashMap<>();
 	private Map<String,Item> catalogueItems = new HashMap<>();
@@ -28,16 +29,22 @@ public class GenerateurJeu {
 		this.ajouterCatalogueSalles(new Lieu("hallDerriere", "Un lieu paisible...","miniMapHall", "Aller dans le hall"));
 		this.ajouterCatalogueSalles(new Lieu("bureauBdeDevant", "Un si grand bureau pour de si petites révisions","miniMapBureauBde", "Aller dans le bureau du bde"));
 		this.ajouterCatalogueSalles(new Lieu("bureauBdeDerriere", "Un si grand bureau pour de si petites révisions","miniMapBureauBde", "Aller dans le bureau du bde"));
-		this.ajouterCatalogueSalles(new Lieu("couloir", "wow il est balaise lui...", "miniMapCouloir", "Aller dans le couloir"));
+		this.ajouterCatalogueSalles(new Lieu("couloir", "", "miniMapCouloir", "Aller dans le couloir"));
 		this.ajouterCatalogueSalles(new Lieu("salleInfoDevant", "Oh l'odeur...", "miniMapSalleInfo", "Aller dans la salle info"));
-		this.ajouterCatalogueSalles(new Lieu("salleInfoDerriere", "C'est pire de derrière...", "miniMapSalleInfo", "Aller dans la salle info"));
+		this.ajouterCatalogueSalles(new Lieu("salleInfoDerriere", "Oh l'odeur...", "miniMapSalleInfo", "Aller dans la salle info"));
 		this.ajouterCatalogueSalles(new Lieu("salleMichuDevant", "", "miniMapSalleMichu", "Aller dans la salle de madame Michu"));
 		this.ajouterCatalogueSalles(new Lieu("salleMichuDerriere", "", "miniMapSalleMichu", "Aller dans la salle de madame Michu"));
 		this.ajouterCatalogueSalles(new Lieu("salleRemiDevant", "Il est si musclé...", "miniMapSalleRemi", "Aller dans la salle de Rémi"));
 		this.ajouterCatalogueSalles(new Lieu("salleRemiDerriere", "Il est si musclé...", "miniMapSalleRemi", "Aller dans la salle de Rémi"));
-		this.ajouterCatalogueSalles(new Lieu("monik", "Cedric : ok je suis foutu...\n*Cedric perd 25 PV*", "", ""));
-
+		this.ajouterCatalogueSalles(new Lieu("monik", "\n*Monik apparait, son aura nous affaiblit*\nCedric : ok je suis foutu...\n*Cedric perd 25 PV*", "", ""));
 		//fin de la création des maps
+		
+		
+		//on remplit les vues
+		this.ajouterCatalogueVues(new Vue("vueEcranEroll","c'est vrai qu'il est beau","Regarder l'écran d'Eroll"));
+		this.ajouterCatalogueVues(new Vue("vueFenetreHall", "aucun étudiant dehors, ah oui c'est les vacances de février, enfin pas pour tout le monde...", "Regarder par la fenêtre"));
+		this.ajouterCatalogueVues(new Vue("vueSol","Cedric : oh un sol !", "Regarder sous le tapis"));
+		//fin remplissage vues
 		
 		
 		//on relie les 2 côtés des maps 
@@ -82,16 +89,13 @@ public class GenerateurJeu {
 		for(String key : catalogueSalles.keySet()) {
 			Lieu lieuCourant = getSalle(key);
 			
-			if(lieuCourant.getLieuxVoisins() != null) {
-				for(Lieu l : lieuCourant.getLieuxVoisins()) {
+			//pas besoin de if != null car on initialise la liste à 0, jamais null (youpi au moins 2 lignes de code en moins)
+			for(Lieu l : lieuCourant.getLieuxVoisins()) {
 					lieuCourant.ajouterAction(new ActionChangementMap(l.getLabelBouton(),l));
-				}
 			}
 			
 			
-			if (lieuCourant.getLieuOpposé() != null) {
-				lieuCourant.ajouterAction(new ActionChangementMap("Se retourner", lieuCourant.getLieuOpposé()));
-			}
+			lieuCourant.ajouterAction(new ActionChangementMap("Se retourner", lieuCourant.getLieuOpposé()));
 		}
 		//fin remplissage actions changement Map
 		
@@ -110,7 +114,7 @@ public class GenerateurJeu {
 		listeActions.add(new ActionDialogue("Regarder le journal", "Cedric : QUOI ! un élève de L3G a trouvé un stage, c'est pas arrivé depuis 2005 !"));
 		listeActions.add(new ActionDialogue("Allumer la radio","*Non merci, éteins-moi s'il te plait*\n Cedric : euh okk...."));
 		listeActions.add(new ActionDialogue("Fouiller la poubelle","Cedric : Oh les plans de la nouvelle fac... pourquoi mettre l'écran tout à gauche de la salle ? et les élèves assis à droite ?"));
-		listeActions.add(new ActionChangementVue("Regarder par la fenêtre", "Aucun étudiant dehors, ah oui c'est les vacances de février, enfin pas pour tout le monde...", "vueFenetreHall"));
+		listeActions.add(new ActionChangementVue(this.getVue("vueFenetreHall").getLabelBouton(), this.getVue("vueFenetreHall")));
 		getSalle("hallDevant").ajouterActions(listeActions);
 		listeActions = new ArrayList<>();
 		
@@ -126,18 +130,18 @@ public class GenerateurJeu {
 		
 		//bureauBdeDevant
 		listeActions.add(new ActionDialogue("Prendre la clé","Ethan : hop hop hop pas touche à ça, c'est la clé pour l'armoir à bières"));
-		listeActions.add(new ActionChangementVue("Regarder sous le tapis","Cedric : oh un sol !", "vueSol"));
+		listeActions.add(new ActionChangementVue(this.getVue("vueSol").getLabelBouton(), this.getVue("vueSol")));
 		getSalle("bureauBdeDevant").ajouterActions(listeActions);
 		listeActions = new ArrayList<>();
 		
 		//bureauBdeDerriere
-		listeActions.add(new ActionChangementVue("Regarder l'écran d'Eroll","Cedric : c'est vrai qu'il est beau","vueEcranEroll"));
 		listeActions.add(new ActionDialogue("Prendre un livre", "Synopsis : Un homme, Steve, a vu sa vie bouleversée lorsqu'il a trouvé du diamant en minant chez lui jusqu'à 60 à 100 mètres de profondeur, suivez son évolution."));
+		listeActions.add(new ActionChangementVue(this.getVue("vueEcranEroll").getLabelBouton(), this.getVue("vueEcranEroll")));
 		getSalle("bureauBdeDerriere").ajouterActions(listeActions);
 		//fin bureauBde
 		
+		
 		//couloir
-		listeActions.add(new ActionDialogue("Parler au gardien", "Gardien : Ah toi t'es pas étudiant ici... \nCedric : si si je suis en Master\nGardien : ah ouais ? pourtant t'as pas la tête de quelqu'un qui mange des pâtes depuis 6 mois."));
 		listeActions.add(new ActionDialogue("Demander l'heure au gardien", "Gardien : 14h37.\nCedric : et les cours reprennent à...?\nGardien : 14h00.\nCedric : ..."));
 		listeActions.add(new ActionDialogue("Regarder le tableau d'affichage", "Cedric : 'Réunion annulation des réunions - ANNULÉE'\nCedric : logique."));
 		listeActions.add(new ActionDialogue("Examiner l'extincteur", "Cedric : la dernière vérification date de 2019...\nGardien : chut."));
@@ -150,32 +154,24 @@ public class GenerateurJeu {
 		//fin couloir
 		
 		
-		//salleInfoDerriere
-		listeActions.add(new ActionDialogue("Parler à Stéphane", "Stéphane : ouais donc moi j'ai commencé le TP... enfin j'ai ouvert Eclipse\nCedric : c'est bien\nStéphane : ouais ça fait 1h"));
-
-		listeActions.add(new ActionDialogue("Parler à Cédric2", "Cédric2 : *dit quelque chose en mandarin*\nCedric : euh...\nCédric2 : *montre son écran*\nCedric : ... il a déjà fini le TP de la semaine prochaine."));
-
-		listeActions.add(new ActionDialogue("Regarder l'écran de la rangée intelligente", "Cedric : ... ils codent en vim, sans souris, avec 3 terminaux ouverts.\nCedric : l'un d'eux compile sans erreur.\nCedric : je me sens mal."));
-
-		listeActions.add(new ActionDialogue("Tenter de communiquer avec tout le monde", "Cedric : bon... quelqu'un peut m'aider ?\n*silence*\nStéphane: je sais pas\nOussama : wallah moi non plus\nCédric2 : *envoie le corrigé complet sur le chat sans rien dire*\nCedric : ...merci je crois"));
-
-		listeActions.add(new ActionDialogue("Regarder le chat de classe", "[14:02] Cédric2 : *envoie le TP entier résolu*\n[14:03] Oussama : t'es un dieu\n[14:03] Stéphane : merci bg\n[14:04] Cédric2 : *envoie le TP de la semaine prochaine*\n[14:04] Tout le monde : ???"));
-
-		listeActions.add(new ActionDialogue("Demander de l'aide à la rangée intelligente", "Cedric : hé, tu peux m'expliquer le TP ?\nLéo : *explique en 40 secondes chrono, avec un schéma, deux analogies et une optimisation que le prof connaît pas*\nCedric : ...\nCedric : et en plus lent ?\nLéo : *recommence encore plus vite*"));
-
-
-		getSalle("salleInfoDerriere").ajouterActions(listeActions);
-		listeActions = new ArrayList<>();
-		//fin salleInfoDerriere
-		
 		//salleInfoDevant
 		listeActions.add(new ActionDialogue("Parler à Oussama", "Oussama : wallah frère le prof il nous a donné 6 TPs pour demain\nCedric : t'as commencé ?\nOussama : j'ai ouvert le sujet\nCedric : et ?\nOussama : y'a écrit 'bon courage' en bas... j'ai fermé."));
 		listeActions.add(new ActionDialogue("Regarder l'écran de la rangée paresseuse", "Cedric : Adam regarde YouTube.\nMehdi regarde Adam regarder YouTube.\nWissem dort.\nOussama surveille que le prof arrive pas.\nC'est un système rodé."));
 		listeActions.add(new ActionDialogue("Réveiller Wissem", "Cedric : hé, t'es réveillé ?\nWissem : ouais ouais je réfléchis\nCedric : t'avais les yeux fermés\nWissem : c'est pour mieux me concentrer\n*se rendort*"));
 		getSalle("salleInfoDevant").ajouterActions(listeActions);
 		listeActions = new ArrayList<>();
+		//fin salleInfoDevant
 		
 		
+		//salleInfoDerriere
+		listeActions.add(new ActionDialogue("Parler à Stéphane", "Stéphane : ouais donc moi j'ai commencé le TP... enfin j'ai ouvert Eclipse\nCedric : c'est bien\nStéphane : ouais ça fait 1h"));
+		listeActions.add(new ActionDialogue("Regarder l'écran de la rangée intelligente", "Cedric : ... ils codent en vim, sans souris, avec 3 terminaux ouverts.\nCedric : l'un d'eux compile sans erreur.\nCedric : je me sens mal."));
+		listeActions.add(new ActionDialogue("Tenter de communiquer avec tout le monde", "Cedric : bon... quelqu'un peut m'aider ?\n*silence*\nStéphane: je sais pas\nOussama : wallah moi non plus\nCédric2 : *envoie le corrigé complet sur le chat sans rien dire*\nCedric : ...merci je crois"));
+		listeActions.add(new ActionDialogue("Regarder le chat de classe", "[14:02] Cédric2 : *envoie le TP entier résolu*\n[14:03] Oussama : t'es un dieu\n[14:03] Stéphane : merci bg\n[14:04] Cédric2 : *envoie le TP de la semaine prochaine*\n[14:04] Tout le monde : ???"));
+		listeActions.add(new ActionDialogue("Demander de l'aide à la rangée intelligente", "Cedric : hé, tu peux m'expliquer le TP ?\nLéo : *explique en 40 secondes chrono, avec un schéma, deux analogies et une optimisation que le prof connaît pas*\nCedric : ...\nCedric : et en plus lent ?\nLéo : *recommence encore plus vite*"));
+		getSalle("salleInfoDerriere").ajouterActions(listeActions);
+		listeActions = new ArrayList<>();
+		//fin salleInfoDerriere
 	}
 	
 	
@@ -193,7 +189,7 @@ public class GenerateurJeu {
 		
 		ajouterCatalogueItems(new Item("cafe", "Ouvrir la malette", "Cedric :  ce n'est pas une valise mais un thermos géant à café ! j'en prends un peu", 25,false));
 	}
-	
+
 	
 	public void start() {
 		this.creerLesItems();
@@ -215,6 +211,12 @@ public class GenerateurJeu {
     }
 	
 	
+	private void ajouterCatalogueVues(Vue v) {
+		
+        catalogueVues.put(v.getNom(), v);
+    }
+	
+	
 	private void ajouterCataloguePnj(Pnj p) {
 		
 		cataloguePnj.put(p.getNom(), p);
@@ -229,7 +231,17 @@ public class GenerateurJeu {
 	
 	private Lieu getSalle(String nom) {
 		
-		return this.catalogueSalles.get(nom);
+		Lieu l = this.catalogueSalles.get(nom);
+		if (l == null) System.err.println("ERREUR : La salle '" + nom + "' n'existe pas dans le catalogue !");
+	    return l;
+	}
+	
+	
+	private Vue getVue(String nom) {
+		
+		Vue v =  this.catalogueVues.get(nom);
+		if (v == null) System.err.println("ERREUR : La vue '" + nom + "' n'existe pas dans le catalogue !");
+	    return v;
 	}
 	
 	
@@ -242,6 +254,12 @@ public class GenerateurJeu {
 	public Map<String, Pnj> getCataloguePnj() {
 		
 		return this.cataloguePnj;
+	}
+	
+	
+public Map<String, Item> getCatalogueItems() {
+		
+		return this.catalogueItems;
 	}
 }
 	
