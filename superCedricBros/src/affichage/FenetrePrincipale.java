@@ -89,7 +89,7 @@ public class FenetrePrincipale extends JFrame{
 	
 	public void chargerRegles() {
 		
-		File f = new File("règles.txt");
+		File f = new File("data/règles.txt");
         try {
 			FileInputStream fis = new FileInputStream(f);
 			InputStreamReader is = new InputStreamReader(fis);

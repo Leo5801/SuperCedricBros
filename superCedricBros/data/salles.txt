@@ -1,0 +1,12 @@
+hallDevant ; Un lieu paisible... ; miniMapHall ; Aller dans le hall
+hallDerriere ; Un lieu paisible... ; miniMapHall ; Aller dans le hall
+bureauBdeDevant ; Un si grand bureau pour de si petites révisions ; miniMapBureauBde ; Aller dans le bureau du bde
+bureauBdeDerriere ; Un si grand bureau pour de si petites révisions ; miniMapBureauBde ; Aller dans le bureau du bde
+couloir ;  ; miniMapCouloir ; Aller dans le couloir
+salleInfoDevant ; Oh l'odeur... ; miniMapSalleInfo ; Aller dans la salle info
+salleInfoDerriere ; Oh l'odeur... ; miniMapSalleInfo ; Aller dans la salle info
+salleMichuDevant ;  ; miniMapSalleMichu ; Aller dans la salle de madame Michu
+salleMichuDerriere ;  ; miniMapSalleMichu ; Aller dans la salle de madame Michu
+salleRemiDevant ; Il est si musclé... ; miniMapRemi ; Aller dans la salle de Rémi
+salleRemiDerriere ; Il est si musclé... ; miniMapRemi ; Aller dans la salle de Rémi
+monik ; \n*Monik apparait, son aura nous affaiblit*\nCedric : ok je suis foutu...\n*Cedric perd 25 PV* ;\u200B;\u200B

@@ -1,0 +1,25 @@
+hallDevant ; Allumer le robot ; Salut moi c'est Gemimisce, une IA capable de voler ton travail post Master ! bonnes revisions !
+hallDevant ; Regarder le journal ; Cedric : QUOI ! un élève de L3G a trouvé un stage, c'est pas arrivé depuis 2005 !
+hallDevant ; Allumer la radio ; *Non merci, éteins-moi s'il te plait*\n Cedric : euh okk....
+hallDevant ; Fouiller la poubelle ; Cedric : Oh les plans de la nouvelle fac... pourquoi mettre l'écran tout à gauche de la salle ? et les élèves assis à droite ?
+hallDerriere ; Prendre un livre ; Titre : Cours de POO : des classes encore plus... classes
+hallDerriere ; Fouiller dans les cartons ; Cedric : oh une canette, ça doit servir
+hallDerriere ; Intégragir avec le distributeur ; *Hors service*
+hallDerriere ; S'asseoir sur le canapé ; *prout*\nCedric : oh.. un coussin péteur..
+bureauBdeDevant ; Prendre la clé ; Ethan : hop hop hop pas touche à ça, c'est la clé pour l'armoir à bières
+bureauBdeDerriere ; Prendre un livre ; Synopsis : Un homme, Steve, a vu sa vie bouleversée lorsqu'il a trouvé du diamant en minant chez lui jusqu'à 60 à 100 mètres de profondeur, suivez son évolution.
+couloir ; Demander l'heure au gardien ; Gardien : 14h37.\nCedric : et les cours reprennent à...?\nGardien : 14h00.\nCedric : ...
+couloir ; Regarder le tableau d'affichage ; Cedric : 'Réunion annulation des réunions - ANNULÉE'\nCedric : logique.
+couloir ; Examiner l'extincteur ; Cedric : la dernière vérification date de 2019...\nGardien : chut.
+couloir ; Lire les petites annonces ; 'Cherche coéquipier projet groupe sérieux et motivé - URGENT'\nCedric : posté il y a 3 ans. Toujours là.
+couloir ; Tenter d'ouvrir une salle ; *verrouillé*\nGardien : t'as pas le badge.\nCedric : et si j'avais le badge ?\nGardien : t'aurais quand même pas le droit.
+couloir ; Regarder sous le tapis de l'entrée ; Cedric : oh une clé !\nGardien : c'est la clé des toilettes, elle est là depuis 2018, personne n'a jamais posé la question.
+couloir ; Demander le wifi au gardien ; Gardien : c'est 'Fac-Wifi-Officiel'\nCedric : le mot de passe ?\nGardien : 'Fac-Wifi-Officiel'\nCedric : ...ça marche pas.\nGardien : je sais.
+salleInfoDevant ; Parler à Oussama ; Oussama : wallah frère le prof il nous a donné 6 TPs pour demain\nCedric : t'as commencé ?\nOussama : j'ai ouvert le sujet\nCedric : et ?\nOussama : y'a écrit 'bon courage' en bas... j'ai fermé.
+salleInfoDevant ; Regarder l'écran de la rangée paresseuse ; Cedric : Adam regarde YouTube.\nMehdi regarde Adam regarder YouTube.\nWissem dort.\nOussama surveille que le prof arrive pas.\nC'est un système rodé.
+salleInfoDevant ; Réveiller Wissem ; Cedric : hé, t'es réveillé ?\nWissem : ouais ouais je réfléchis\nCedric : t'avais les yeux fermés\nWissem : c'est pour mieux me concentrer\n*se rendort*
+salleInfoDerriere ; Parler à Stéphane ; Stéphane : ouais donc moi j'ai commencé le TP... enfin j'ai ouvert Eclipse\nCedric : c'est bien\nStéphane : ouais ça fait 1h
+salleInfoDerriere ; Regarder l'écran de la rangée intelligente ; Cedric : ... ils codent en vim, sans souris, avec 3 terminaux ouverts.\nCedric : l'un d'eux compile sans erreur.\nCedric : je me sens mal.
+salleInfoDerriere ; Tenter de communiquer avec tout le monde ; Cedric : bon... quelqu'un peut m'aider ?\n*silence*\nStéphane: je sais pas\nOussama : wallah moi non plus\nCédric2 : *envoie le corrigé complet sur le chat sans rien dire*\nCedric : ...merci je crois
+salleInfoDerriere ; Regarder le chat de classe ; [14:02] Cédric2 : *envoie le TP entier résolu*\n[14:03] Oussama : t'es un dieu\n[14:03] Stéphane : merci bg\n[14:04] Cédric2 : *envoie le TP de la semaine prochaine*\n[14:04] Tout le monde : ???
+salleInfoDerriere ; Demander de l'aide à la rangée intelligente ; Cedric : hé, tu peux m'expliquer le TP ?\nLéo : *explique en 40 secondes chrono, avec un schéma, deux analogies et une optimisation que le prof connaît pas*\nCedric : ...\nCedric : et en plus lent ?\nLéo : *recommence encore plus vite*

@@ -1,0 +1,11 @@
+hallDevant ; bureauBdeDevant ; couloir
+hallDerriere ; bureauBdeDevant ; couloir
+bureauBdeDevant ; hallDevant
+bureauBdeDerriere ; hallDevant
+couloir ; hallDevant ; salleInfoDevant ; salleRemiDevant
+salleInfoDevant ; salleMichuDevant ; couloir
+salleInfoDerriere ; salleMichuDevant ; couloir
+salleMichuDevant ; salleInfoDevant
+salleMichuDerriere ; salleInfoDevant
+salleRemiDevant ; couloir
+salleRemiDerriere ; couloir
