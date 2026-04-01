@@ -410,7 +410,7 @@ public class FenetrePrincipale extends JFrame{
     	JButton btn = new JButton("Parler à " + p.getNom());
     	
     	btn.addActionListener(e -> {
-    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + p.getDialogue()[0]);//le portrait pour l'immersion
+    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + p.parler());//le portrait pour l'immersion
     	});
 
         this.ajouterBoutonAction(btn);

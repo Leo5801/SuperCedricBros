@@ -23,3 +23,4 @@ salleInfoDerriere ; Regarder l'écran de la rangée intelligente ; Cedric : ... 
 salleInfoDerriere ; Tenter de communiquer avec tout le monde ; Cedric : bon... quelqu'un peut m'aider ?\n*silence*\nStéphane: je sais pas\nOussama : wallah moi non plus\nCédric2 : *envoie le corrigé complet sur le chat sans rien dire*\nCedric : ...merci je crois
 salleInfoDerriere ; Regarder le chat de classe ; [14:02] Cédric2 : *envoie le TP entier résolu*\n[14:03] Oussama : t'es un dieu\n[14:03] Stéphane : merci bg\n[14:04] Cédric2 : *envoie le TP de la semaine prochaine*\n[14:04] Tout le monde : ???
 salleInfoDerriere ; Demander de l'aide à la rangée intelligente ; Cedric : hé, tu peux m'expliquer le TP ?\nLéo : *explique en 40 secondes chrono, avec un schéma, deux analogies et une optimisation que le prof connaît pas*\nCedric : ...\nCedric : et en plus lent ?\nLéo : *recommence encore plus vite*
+salleMichuDevant ; Regarder dans les classeurs ; Cedric : 
