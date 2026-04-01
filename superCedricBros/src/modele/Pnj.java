@@ -17,6 +17,11 @@ public class Pnj {
 	}
 	
 	
+	public Pnj(String nom, String nomPortrait) {
+		this(nom, nomPortrait, new String[0]);
+	}
+	
+	
 	public Pnj() {}
 
 

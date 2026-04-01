@@ -6,9 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -120,7 +118,7 @@ public class GenerateurJeu {
 		File f = new File("data/vues.txt");
 		
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f))); //c'est toujours la même chose mais c'est pratique!
 			
 			String ligne;
 			while((ligne = br.readLine()) != null) {
@@ -266,27 +264,69 @@ public class GenerateurJeu {
 	
 	
 	public void creerLesPersos() {
-		String[] test = {"coucou"};
-		ajouterCataloguePnj(new Pnj("eroll", "erollAvecCasquette",test));
-		ajouterCataloguePnj(new Pnj("nina", "nina",test));
-		ajouterCataloguePnj(new Pnj("marcus", "marcus", test));
-		ajouterCataloguePnj(new Pnj("mme michu", "michu", test));
 		
+		File f = new File("data/pnj.txt");
+		
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+			String ligne;
+			
+			while((ligne = br.readLine()) != null) {
+				
+				if(ligne.trim().isEmpty()) continue;
+				
+				String[] infos = ligne.split("\\s*;\\s*");
+				
+				if(infos.length>=3) {
+					Pnj nouveau = new Pnj(infos[0], infos[1]);
+					
+					String[] dialogue = new String[infos.length-2];
+					for(int i=0; i<infos.length-2; i++) {
+						dialogue[i] = infos[i+2];
+					}
+					nouveau.setDialogue(dialogue);
+					this.ajouterCataloguePnj(nouveau);
+				}
+			}
+			
+			br.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	public void creerLesItems() {
 		
-		ajouterCatalogueItems(new Item("café", "Ouvrir la malette", "Cedric :  ce n'est pas une valise mais un thermos géant à café ! j'en prends un peu", 25,false));
+		File f = new File("data/items.txt");
+		
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+			String ligne;
+			
+			while((ligne = br.readLine()) != null) {
+				if(ligne.trim().isEmpty()) continue;
+				
+				String[] infos = ligne.split("\\s*;\\s*");
+				if(infos.length == 5) {
+					Item monObjet = new Item(infos[0], infos[1], infos[2],Integer.parseInt(infos[3].trim()), Boolean.parseBoolean(infos[4].trim()));
+					this.ajouterCatalogueItems(monObjet);
+				}
+			}
+			
+			br.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	
-	public void start() {
-		this.creerLesItems();
-		this.creerLesPersos();
-		this.creerLeMonde();
-	}
-	
 	
 	private void relierMap(Lieu devant, Lieu derriere) {
 		
@@ -347,10 +387,18 @@ public class GenerateurJeu {
 	}
 	
 	
-public Map<String, Item> getCatalogueItems() {
+	public Map<String, Item> getCatalogueItems() {
 		
 		return this.catalogueItems;
 	}
+	
+	
+	public void start() {
+		this.creerLesItems();
+		this.creerLesPersos();
+		this.creerLeMonde();
+	}
+	
 }
 	
 	

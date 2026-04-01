@@ -1,1 +1,3 @@
 bureauBdeDevant ; eroll
+hallDerriere ; nina
+salleMichuDevant ; michu

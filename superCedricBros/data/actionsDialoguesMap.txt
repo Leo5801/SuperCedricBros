@@ -4,7 +4,7 @@ hallDevant ; Allumer la radio ; *Non merci, éteins-moi s'il te plait*\n Cedric 
 hallDevant ; Fouiller la poubelle ; Cedric : Oh les plans de la nouvelle fac... pourquoi mettre l'écran tout à gauche de la salle ? et les élèves assis à droite ?
 hallDerriere ; Prendre un livre ; Titre : Cours de POO : des classes encore plus... classes
 hallDerriere ; Fouiller dans les cartons ; Cedric : oh une canette, ça doit servir
-hallDerriere ; Intégragir avec le distributeur ; *Hors service*
+hallDerriere ; Intéragir avec le distributeur ; *Hors service*
 hallDerriere ; S'asseoir sur le canapé ; *prout*\nCedric : oh.. un coussin péteur..
 bureauBdeDevant ; Prendre la clé ; Ethan : hop hop hop pas touche à ça, c'est la clé pour l'armoir à bières
 bureauBdeDerriere ; Prendre un livre ; Synopsis : Un homme, Steve, a vu sa vie bouleversée lorsqu'il a trouvé du diamant en minant chez lui jusqu'à 60 à 100 mètres de profondeur, suivez son évolution.
