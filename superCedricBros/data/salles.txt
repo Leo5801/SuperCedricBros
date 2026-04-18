@@ -7,6 +7,6 @@ salleInfoDevant ; Oh l'odeur... ; miniMapSalleInfo ; Aller dans la salle info
 salleInfoDerriere ; Oh l'odeur... ; miniMapSalleInfo ; Aller dans la salle info
 salleMichuDevant ;  ; miniMapSalleMichu ; Aller dans la salle de madame Michu
 salleMichuDerriere ;  ; miniMapSalleMichu ; Aller dans la salle de madame Michu
-salleRemiDevant ; Il est si musclé... ; miniMapRemi ; Aller dans la salle de Rémi
-salleRemiDerriere ; Il est si musclé... ; miniMapRemi ; Aller dans la salle de Rémi
+salleRemiDevant ; Il est si musclé... ; miniMapSalleRemi ; Aller dans la salle de Rémi
+salleRemiDerriere ; Il est si musclé... ; miniMapSalleRemi ; Aller dans la salle de Rémi
 monik ; \n*Monik apparait, son aura nous affaiblit*\nCedric : ok je suis foutu...\n*Cedric perd 25 PV* ;\u200B;\u200B

@@ -1,3 +1,7 @@
 vueEcranEroll ; c'est vrai qu'il est beau ; Regarder l'écran d'Eroll
 vueFenetreHall ; aucun étudiant dehors, ah oui c'est les vacances de février, enfin pas pour tout le monde... ; Regarder par la fenêtre
 vueSol ; Cedric : oh un sol ! ; Regarder sous le tapis
+vueTiroir ; Cedric : quoi les pierres d'infinité ? ici ? serait-elle ... non impossible... ; Regarder dans le tiroir
+vueVerre ; Cedric : oh j'ai 5 ans ; Regarder au fond du verre
+vueEcranEmna ; Cedric : stylééé ; Regarder l'écran d'Emna
+vuePhoto ; Cedric : oufff.. ; Regarder la photo (choix dangereux)

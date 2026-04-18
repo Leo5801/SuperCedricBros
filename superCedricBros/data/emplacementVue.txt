@@ -1,0 +1,7 @@
+hallDevant ; vueFenetreHall
+bureauBdeDerriere ; vueEcranEroll
+bureauBdeDevant ; vueSol
+salleMichuDerriere ; vueTiroir
+salleInfoDevant ; vueVerre
+salleInfoDevant ; vueEcranEmna
+couloir ; vuePhoto

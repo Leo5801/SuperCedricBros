@@ -1,12 +1,20 @@
 package modele;
 
-public class Joueur extends Entité {
+import java.io.Serializable;
+
+public class Joueur extends Entité implements Serializable{
    
-    private int pvActuel;
+	private static final long serialVersionUID = 1L;
+	private int pvActuel;
     private int pvMax;
-    private Item[] inventaire = new Item[3];
-    private Item inventaireQuete;
-    private boolean[] quetes = {false,false,false};
+    private transient Item[] inventaire = new Item[3];
+    private transient Item inventaireQuete;
+    private int etapeQueteEroll;
+    private int etapeQueteRemi;
+    private boolean[] progressionEroll = new boolean[4];
+    private boolean[] progressionRemi = new boolean[0];
+    private boolean aChoisiEroll;
+    private boolean aChoisiRemi;
     
 
     public Joueur() {
@@ -18,6 +26,10 @@ public class Joueur extends Entité {
         this.pvActuel = pvActuel;
         this.pvMax = pvMax;
         this.inventaireQuete = null;
+        this.etapeQueteEroll = 0;
+        this.etapeQueteRemi = 0;
+        this.aChoisiEroll = false;  
+        this.aChoisiRemi = false;
     }
 
     // Méthode pour changer les PV du joueur
@@ -46,49 +58,20 @@ public class Joueur extends Entité {
     }
 
     
-    public void validerQuete(int index) {
-        if (index >= 0 && index < quetes.length) {
-            this.quetes[index] = true;
+    public void validerQueteEroll(int index) {
+        if (index >= 0 && index < progressionEroll.length) {
+            this.progressionEroll[index] = true;
         }
     }
     
     
     public boolean aToutGagne() {
-        for (boolean q : quetes) {
+        for (boolean q : progressionEroll) {
             if (!q) return false;
         }
         return true;
     }
-    
-    
-    public boolean[] getQuetes() { 
-    	
-    	return quetes; 
-    }
-    
-    
-    public void setQuetes(boolean[] q) { 
-    	
-    	this.quetes = q; 
-    }
-    
-
-
-	int getPvActuel() {
-		
-		return this.pvActuel;
-	}
-
-	int getPvMax() {
-		
-		return this.pvMax;
-	}
-
-	public Item[] getInventaire() {
-		return inventaire;
-	}
-
-	
+   
 	
 	public void ajouterItem(int i, Item objet) {
 	    if (i >= 0 && i < 3) {
@@ -97,37 +80,100 @@ public class Joueur extends Entité {
 	}
 	
 	
-	public void ajouterItemQuete(Item objet) {
-		
-		this.inventaireQuete = objet;
-	}
-	
-	
 	public void retirerItemQuete() {
 		
-		this.inventaireQuete = null;
+		this.setInventaireQuete(null);
 	}
-	
-	
-	public boolean aObjetQuete() {
-			
-		return this.inventaireQuete != null;
+
+	public void ajouterItemQuete(Item i) {
+		
+		if(this.inventaireQuete == null) {
+			this.setInventaireQuete(i);
+		}
 	}
-	
+
+	public int getPvActuel() {
+		return pvActuel;
+	}
 
 	public void setPvActuel(int pvActuel) {
-		
 		this.pvActuel = pvActuel;
 	}
-	
-	
-	public void setNom(String nom) {
-		
-		this.nom = nom;
+
+	public int getPvMax() {
+		return pvMax;
 	}
 
-	public void viderInventaire() {
-		
-		this.inventaire = new Item[3];
+	public void setPvMax(int pvMax) {
+		this.pvMax = pvMax;
 	}
+
+	public Item[] getInventaire() {
+		return inventaire;
+	}
+
+	public void setInventaire(Item[] inventaire) {
+		this.inventaire = inventaire;
+	}
+
+	public Item getInventaireQuete() {
+		return inventaireQuete;
+	}
+
+	public void setInventaireQuete(Item inventaireQuete) {
+		this.inventaireQuete = inventaireQuete;
+	}
+
+	public int getEtapeQueteEroll() {
+		return etapeQueteEroll;
+	}
+
+	public void setEtapeQueteEroll(int etapeQueteEroll) {
+		this.etapeQueteEroll = etapeQueteEroll;
+	}
+
+	public int getEtapeQueteRemi() {
+		return etapeQueteRemi;
+	}
+
+	public void setEtapeQueteRemi(int etapeQueteRemi) {
+		this.etapeQueteRemi = etapeQueteRemi;
+	}
+
+	public boolean[] getProgressionEroll() {
+		return progressionEroll;
+	}
+
+	public void setProgressionEroll(boolean[] progressionEroll) {
+		this.progressionEroll = progressionEroll;
+	}
+
+	public boolean[] getProgressionRemi() {
+		return progressionRemi;
+	}
+
+	public void setProgressionRemi(boolean[] progressionRemi) {
+		this.progressionRemi = progressionRemi;
+	}
+
+	public boolean isaChoisiEroll() {
+		return aChoisiEroll;
+	}
+
+	public void setaChoisiEroll(boolean aChoisiEroll) {
+		this.aChoisiEroll = aChoisiEroll;
+	}
+
+	public boolean isaChoisiRemi() {
+		return aChoisiRemi;
+	}
+
+	public void setaChoisiRemi(boolean aChoisiRemi) {
+		this.aChoisiRemi = aChoisiRemi;
+	}
+
+	
+	
+	
+	
 }

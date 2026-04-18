@@ -2,23 +2,30 @@ package modele;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Partie implements Serializable {
     
-    
     private static final long serialVersionUID = 1L;
-
-    // progession
+	// progession
     private String nomLieuActuel;
     private EtatJeu etatActuel;
-    private List<String> objetsRamasses = new ArrayList<>();
+    
+    // Clé : Nom de la salle | Valeur : Liste des noms des items présents dans cette salle
+    private Map<String, List<String>> emplacementItems;
+    
+    // Clé : Nom de la salle | Valeur : Liste des noms des PNJ présents dans cette salle
+    private Map<String, List<String>> emplacementPnj;
+
+    // Clé : Nom de la salle | Valeur : Liste des labels des actions disponibles
+    
+    private Map<String, List<String>> actionsParSalle;
 
     // joueur
-    private int pvActuel;
-    private int pvMax;
-    private boolean[] progressionQuetes;
+    private Joueur j;
     
     // inventaire
     // On ne stocke que les NOMS (IDs) des items. 
@@ -27,6 +34,9 @@ public class Partie implements Serializable {
 
     public Partie() {
         this.nomsItemsInventaire = new String[3];
+        this.emplacementItems = new HashMap<>();
+        this.emplacementPnj = new HashMap<>();
+        this.actionsParSalle = new HashMap<>();
     }
 
 
@@ -53,30 +63,7 @@ public class Partie implements Serializable {
     	this.etatActuel = etatActuel; 
     }
     
-
-    public int getPvActuel() { 
-    	return pvActuel; 
-    }
     
-    
-    public void setPvActuel(int pvActuel) { 
-    	
-    	this.pvActuel = pvActuel; 
-    }
-    
-
-    public int getPvMax() { 
-    	
-    	return pvMax; 
-    }
-    
-    
-    public void setPvMax(int pvMax) { 
-    	
-    	this.pvMax = pvMax; 
-    }
-    
-
     public String[] getNomsItemsInventaire() { 
     	
     	return nomsItemsInventaire; 
@@ -89,27 +76,37 @@ public class Partie implements Serializable {
     }
 
 
-	public void setProgressionQuetes(boolean[] quetes) {
-		
-		this.progressionQuetes = quetes;
-	}
-	
-	
-	public boolean[] getProgressionQuetes() {
-		
-		return this.progressionQuetes;
+	public Joueur getJ() {
+		return j;
 	}
 
 
-	public List<String> getObjetsRamasses() {
-		return objetsRamasses;
-	}
-
-
-	public void setObjetsRamasses(List<String> objetsRamasses) {
-		this.objetsRamasses = objetsRamasses;
+	public void setJ(Joueur j) {
+		this.j = j;
 	}
 	
 	
-	
+	public Map<String, List<String>> getEmplacementItems() {
+        return emplacementItems;
+    }
+
+    public void setEmplacementItems(Map<String, List<String>> emplacementItems) {
+        this.emplacementItems = emplacementItems;
+    }
+
+    public Map<String, List<String>> getEmplacementPnj() {
+        return emplacementPnj;
+    }
+
+    public void setEmplacementPnj(Map<String, List<String>> emplacementPnj) {
+        this.emplacementPnj = emplacementPnj;
+    }
+
+    public Map<String, List<String>> getActionsParSalle() {
+        return actionsParSalle;
+    }
+
+    public void setActionsParSalle(Map<String, List<String>> actionsParSalle) {
+        this.actionsParSalle = actionsParSalle;
+    }
 }

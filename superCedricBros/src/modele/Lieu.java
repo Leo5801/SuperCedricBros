@@ -37,6 +37,9 @@ public class Lieu {
 		return nom;
 	}
 
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
 	public String getDescription() {
 		return description;
@@ -92,6 +95,12 @@ public class Lieu {
 	public void ajouterPnj(Pnj nouveau) {
 		
 		this.persos.add(nouveau);
+	}
+	
+	
+	public void retirerPnj(Pnj nouveau) {
+		
+		this.persos.remove(nouveau);
 	}
 	
 

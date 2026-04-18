@@ -6,12 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 
 
-public class GenerateurJeu {
+public class GenerateurJeu{
 	
 	private Map<String, Vue> catalogueVues = new HashMap<>();
 	private Map<String,Lieu> catalogueSalles = new HashMap<>();
@@ -78,9 +79,16 @@ public class GenerateurJeu {
 		//on remplit les actions dialogue de chaque map
 		this.chargerActionsDialoguesDepuisfichier();
 		//fin remplissage action dialogue
+		
+		//on remplit les actions changement de vue de chaque map
+		this.chargerEmplacementVueDepuisFichier();
+		//fin
 	}
 	
 	
+	
+
+
 	public void chargerSalleDepuisFichier() {
 		
 		File f = new File("data/salles.txt");
@@ -263,6 +271,37 @@ public class GenerateurJeu {
 	}
 	
 	
+	private void chargerEmplacementVueDepuisFichier() {
+		
+		File f = new File("data/emplacementVue.txt");
+		
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+			
+			String ligne;
+			while((ligne = br.readLine()) != null) {
+				if(ligne.trim().isEmpty()) continue;
+				
+				String[] infos = ligne.split("\\s*;\\s*");
+				
+				if(infos.length==2) {
+					Vue v = this.getVue(infos[1]);
+					ActionChangementVue a = new ActionChangementVue(v.getLabelBouton(), v);
+					this.getSalle(infos[0]).ajouterAction(a);
+				}
+			}
+			
+			br.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public void creerLesPersos() {
 		
 		File f = new File("data/pnj.txt");
@@ -281,8 +320,10 @@ public class GenerateurJeu {
 					Pnj nouveau = new Pnj(infos[0], infos[1]);
 					
 					String[] dialogue = new String[infos.length-2];
+					
 					for(int i=0; i<infos.length-2; i++) {
 						dialogue[i] = infos[i+2];
+						dialogue[i] = dialogue[i].replace("\\n", "\n");
 					}
 					nouveau.setDialogue(dialogue);
 					this.ajouterCataloguePnj(nouveau);

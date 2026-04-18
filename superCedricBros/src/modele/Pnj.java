@@ -7,6 +7,7 @@ public class Pnj {
 	private String nom;
 	private String nomPortrait;
 	private String[] dialogue;
+	private String dialogueQuete = null;
 	
 	
 	public Pnj(String nom, String nomPortrait, String[] dialogue) {
@@ -33,6 +34,10 @@ public class Pnj {
 	public String getNomPortrait() {
 		return nomPortrait;
 	}
+	
+	public void setNomPortrait(String nomPortrait) {
+		this.nomPortrait = nomPortrait;
+	}
 
 
 	public String[] getDialogue() {
@@ -45,11 +50,27 @@ public class Pnj {
 	}
 	
 	
+	
+	public String getDialogueQuete() {
+		return dialogueQuete;
+	}
+
+
+	public void setDialogueQuete(String dialogueQuete) {
+		this.dialogueQuete = dialogueQuete;
+	}
+
+
 	public String parler() {
 		
-		Random aleatoire = new Random();
-		int parole = aleatoire.nextInt(this.dialogue.length);
-		
-		return this.dialogue[parole];
+		if(this.dialogueQuete != null && this.dialogueQuete.isEmpty() == false) {
+			return this.dialogueQuete;
+			
+		} else {
+			Random aleatoire = new Random();
+			int parole = aleatoire.nextInt(this.dialogue.length);
+			
+			return this.dialogue[parole];
+		}
 	}
 }

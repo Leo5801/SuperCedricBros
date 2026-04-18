@@ -1,10 +1,12 @@
 package modele;
 
+import java.io.Serializable;
 
+public class Entité implements Serializable{
 
-public class Entité {
-
-    protected String nom;
+    
+	private static final long serialVersionUID = 1L;
+	protected String nom;
 
     public Entité(String nom) {
         this.nom = nom;

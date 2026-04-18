@@ -405,12 +405,12 @@ public class FenetrePrincipale extends JFrame{
     }
     
     
-    public void genererBoutonPnj(Pnj p) {
+    public void genererBoutonPnj(Pnj p, String dialogue) {
     	
     	JButton btn = new JButton("Parler à " + p.getNom());
     	
     	btn.addActionListener(e -> {
-    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + p.parler());//le portrait pour l'immersion
+    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + dialogue);//le portrait pour l'immersion
     	});
 
         this.ajouterBoutonAction(btn);
@@ -432,13 +432,16 @@ public class FenetrePrincipale extends JFrame{
     
     
     public void genererBoutonItem(Item i) {
-    	JButton btn = new JButton(i.getLabel());
     	
-    	btn.addActionListener(e -> {
-    		this.controleur.ramasserObjet(i);//pour ramasser les items
-    	});
-    	
-    	this.ajouterAction(btn);
+    	if(i != null) {
+    		JButton btn = new JButton(i.getLabel());
+        	
+        	btn.addActionListener(e -> {
+        		this.controleur.ramasserObjet(i);//pour ramasser les items
+        	});
+        	
+        	this.ajouterAction(btn);
+    	}
     }
     
     
@@ -656,8 +659,12 @@ public class FenetrePrincipale extends JFrame{
     
     public void setObjetQuete(Item objet) {
     	
-    	this.mettreAJourSlot(slotItemQuete, objet.getNom());
-    	this.afficherTexte(objet.getLabel());
+    	if(objet != null ) {
+    		this.mettreAJourSlot(slotItemQuete, objet.getNom());
+    	} else {
+    		this.mettreAJourSlot(slotItemQuete, "");
+    	}
+    	
     }
     
     public Integer premierSlotDispo() {
@@ -698,4 +705,128 @@ public class FenetrePrincipale extends JFrame{
 		
         this.controleur = controleur;
     }
+
+
+	public void afficherChoixQueteEroll() {
+		
+		// 1. On nettoie les boutons de déplacement/actions actuels
+	    this.zoneBoutonsChoix.removeAll();
+
+	    // 2. Création du bouton OUI
+	    JButton btnOui = new JButton("Partant !");
+	    btnOui.addActionListener(e -> controleur.accepterQueteEroll());
+	    
+	    // 3. Création du bouton NON
+	    JButton btnNon = new JButton("Plus tard...");
+	    btnNon.addActionListener(e -> controleur.rafraichirAffichage());
+
+	    // 4. On les ajoute et on rafraîchit
+	    this.zoneBoutonsChoix.add(btnOui);
+	    this.zoneBoutonsChoix.add(btnNon);
+	    
+	    this.zoneBoutonsChoix.revalidate();
+	    this.zoneBoutonsChoix.repaint();
+	}
+
+
+	public void genererBoutonDebut(Pnj p, String dialogue) {
+		
+		JButton btn = this.creerBoutonInteractif("Parler à " + p.getNom(), () -> {
+    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + dialogue);//le portrait pour l'immersion
+    		this.afficherChoixQueteEroll();
+    	});
+
+        this.ajouterBoutonAction(btn);
+	}
+	
+	
+	public JButton creerBoutonInteractif(String texte, Runnable action) {
+	    JButton btn = new JButton(texte);
+
+	    // On ajoute l'écouteur d'événement
+	    btn.addActionListener(e -> {
+	        action.run(); // Exécute la méthode passée en paramètre
+	    });
+
+	    return btn;
+	}
+
+
+	public void genererBoutonEtape2Eroll(Pnj p, String dialogue) {
+		
+		JButton btn = this.creerBoutonInteractif("Parler à " + p.getNom(), () -> {
+    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + dialogue);//le portrait pour l'immersion
+    		this.controleur.changeEtapeQueteEroll(3);
+    		
+    		this.viderActions();
+    		JButton continuer = this.creerBoutonInteractif("Demander la prochaine étape", () -> {
+    			this.controleur.gereQueteEroll();
+    		});
+    		this.ajouterAction(continuer);
+    	});
+
+        this.ajouterBoutonAction(btn);
+	}
+
+
+	public void genererBoutonEtape4Eroll(Pnj p, String dialogue) {
+		
+		JButton btn = this.creerBoutonInteractif("Parler à " + p.getNom(), () -> {
+    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + dialogue);//le portrait pour l'immersion
+    		this.controleur.changeEtapeQueteEroll(5);
+    		
+    		this.viderActions();
+    		JButton continuer = this.creerBoutonInteractif("Accepter et se diriger vers le hall", () -> {
+    			this.controleur.gereQueteEroll();
+    		});
+    		this.ajouterAction(continuer);
+    	});
+
+        this.ajouterBoutonAction(btn);
+	}
+
+
+	public void genererBoutonErollEtape6(Pnj p, String dialogue) {
+		
+		JButton btn = this.creerBoutonInteractif("Parler à " + p.getNom(), () -> {
+    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + dialogue);//le portrait pour l'immersion
+    		controleur.viderInventaireQuete();
+    	});
+
+        this.ajouterBoutonAction(btn);
+	}
+
+
+	public void genererBoutonErollEtape7(Pnj p, String dialogue) {
+		
+		JButton btn = this.creerBoutonInteractif("Parler à " + p.getNom(), () -> {
+    		controleur.afficherDialoguePnj(p.getNomPortrait(), p.getNom() + " : " + dialogue);//le portrait pour l'immersion
+    		this.controleur.changeEtapeQueteEroll(8);
+    		this.controleur.gereQueteEroll();
+    	});
+
+        this.ajouterBoutonAction(btn);
+	}
+
+
+	public void genererBoutonVictoire(Pnj p) {
+		
+		JButton btn = this.creerBoutonInteractif("Parler à " + p.getNom(), () -> {
+    		this.controleur.setEtat(EtatJeu.VICTOIRE);
+    	});
+
+        this.ajouterBoutonAction(btn);
+	}
+
+
+	public void masquerComposants() {
+		
+		this.slotItemQuete.setVisible(false);
+		for(JLabel j : this.slotObjet) {
+			j.setVisible(false);
+		}
+		this.barreVie.setVisible(false);
+		this.portraitPNJ.setVisible(false);
+		this.zoneTexte.setVisible(false);
+	}
 }

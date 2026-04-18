@@ -21,6 +21,10 @@ public class ActionDialogue extends Action{
 		return this.texte;
 	}
 	
+	public void setTexte(String texte) {
+		this.texte = texte;
+	}
+	
 	@Override
 	public void executer(GestionnaireJeu g) {
 		
